@@ -5,7 +5,7 @@
 
 ## Title
 ```
-feat(migrate-spec): make handoff block mandatory in Step 4 output
+Make handoff block mandatory in Step 4 output
 ```
 
 ## Body

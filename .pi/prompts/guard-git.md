@@ -1,6 +1,6 @@
 ---
 name: guard-git
-description: "Block dangerous git commands (push, force push, reset --hard, clean, branch -D, checkout/restore .) and enforce Conventional Commits & Branch Protection before an AI agent runs them. Installs hook scripts for Claude Code, Cursor, Cursor CLI, and Gemini CLI; documents Google Antigravity Terminal deny lists. Use when the user wants git safety hooks, to block git push or destructive git in agents, or to mirror the same policy across AI coding tools."
+description: "Block dangerous git commands (push, force push, reset --hard, clean, branch -D, checkout/restore .) and permit versionedcommits messages while enforcing Branch Protection before an AI agent runs them. Installs hook scripts for Claude Code, Cursor, Cursor CLI, and Gemini CLI; documents Google Antigravity Terminal deny lists. Use when the user wants git safety hooks, to block git push or destructive git in agents, or to mirror the same policy across AI coding tools."
 ---
 
 # Guard Git
@@ -14,7 +14,7 @@ Installs a shared hook that blocks destructive git operations and enforces workf
 - **Safety**: `git push --force`, `git reset --hard`, `git clean -f`, `git branch -D`, `git checkout .`, `git restore .`.
 - **Discipline**: Blocks direct commits or pushes to protected branches (`main`, `master`) unless `GIT_BIGPOWERS_LAND=1` (set only by `scripts/land-branch.sh`).
 - **Allows**: `git push origin <feature-branch>` for backup/CI; solo land push to `main` only inside `land-branch.sh`.
-- **Standardization**: Enforces [Conventional Commits](https://www.conventionalcommits.org/) for all `git commit` commands.
+- **Commit messages**: Accepts free-form [versionedcommits](https://github.com/mikkel3000/versionedcommits) messages. Hints are optional; impact is reviewed by `commit-message`, not inferred by a subject regex. Existing subject-length, attribution, and branch safeguards remain.
 - **Secrets**: Blocks commits containing common secret patterns (`sk-`, `ghp_`, `AKIA`, `xoxb-`, `-----BEGIN` private keys) — see [REFERENCE.md](REFERENCE.md).
 
 ## Quick start
@@ -205,10 +205,10 @@ echo '{"tool_input":{"command":"git push -u origin feat/my-task"}}' | ./pre-tool
 # Expected: exit 0
 ```
 
-**4. Conventional Commits (Gemini mode):**
+**4. versionedcommits (Gemini mode):**
 ```bash
-echo '{"tool_input":{"command":"git commit -m \"bad message\""}}' | GIT_GUARDRAILS_MODE=gemini ./pre-tool-use.sh
-# Expected: exit 0, {"decision":"deny", "reason":"..."}
+echo '{"tool_input":{"command":"git commit -m \"Explain the implementation\""}}' | GIT_GUARDRAILS_MODE=gemini ./pre-tool-use.sh
+# Run on a feature branch. Expected: exit 0, {"decision":"allow"}
 ```
 
 **5. Protected Branch commit (Cursor mode):**

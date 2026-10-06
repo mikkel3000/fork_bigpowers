@@ -50,7 +50,7 @@ untracked (`git status --short` shows `??`).
 
 1. Confirm the file is untracked and no other uncommitted changes would be swept up with the
    same `git add`.
-2. Stage and commit the file on its own, using a Conventional Commits message
+2. Stage and commit the file on its own, using a versionedcommits message
    (`chore: track GOLDEN-2026-07-18 baseline`).
 3. Confirm the file is now tracked (`git ls-files --error-unmatch`) and that
    `build-receipts.sh`'s `GOLDEN-*.yaml` glob picks it up as the latest report.
@@ -114,7 +114,7 @@ Not applicable.
 ```
 Scenario: GOLDEN baseline gets committed
   Given specs/benchmarks/reports/GOLDEN-2026-07-18.yaml exists on disk and is untracked
-  When  the file is committed with a Conventional Commits message
+  When  the file is committed with a versionedcommits message
   Then  git ls-files confirms the file is tracked
 
 Scenario: no unrelated changes swept up (6a)

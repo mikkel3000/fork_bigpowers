@@ -25,7 +25,7 @@
 
 The launch. 38 spec-driven lifecycle skills covering the full arc: discover → elaborate → plan → build (TDD) → verify → release. Not a collection of tips — a methodology.
 
-- **Conventional Commits enforcement** from day one. Every commit is feat/fix/docs, every merge triggers semantic-release. No manual version bumps.
+- **versionedcommits policy**: free-form messages with explicit release hints. See `docs/RELEASE.md` for the installed release action.
 - **Agent workflow mandates** baked into CLAUDE.md: agents cannot write code directly. Every task flows through a skill.
 - **Cursor + Gemini CLI + pi support** generated automatically from a single source of truth (`SKILL.md` files).
 - **Karpathy behavioral mandates** (write/select/compress/isolate) enforced from the start — token discipline isn't an afterthought, it's architecture.
@@ -137,7 +137,7 @@ The 13 gaps in the epic sequence are the roadmap. Every number below represents 
 
 ## 🔍 What This Proves
 
-- **101 releases in 41 days** with zero manual version bumps. Semantic-release from Conventional Commits.
+- **101 releases in 41 days** with zero manual version bumps. Semantic-release from versionedcommits.
 - **33 epics delivered** through the same 8-step build cycle the methodology prescribes for users. bigpowers is its own first customer.
 - **Quality is machine-enforced, not human-asserted.** Compliance scores, golden suites, sync-pipeline self-tests, traceability matrices, negative-path tests — all deterministic. No "trust me."
 - **Metrics are git-derived, not self-reported.** Every cycle time, effort number, and lead time traces to a commit. No hand arithmetic.

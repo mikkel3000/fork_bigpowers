@@ -1,42 +1,17 @@
 # GitHub Actions CI/CD Setup
 
-## 1. Configure npm Token
+## 1. Repository permissions
 
-Generate an npm automation token:
-
-```bash
-# On npmjs.org:
-# 1. Login to https://www.npmjs.com
-# 2. Settings → Access Tokens
-# 3. Create Token → Automation
-# 4. Copy token
-```
-
-Add to GitHub:
-
-```bash
-gh secret set NPM_TOKEN --body "your-automation-token"
-```
+Enable **Allow GitHub Actions to create and approve pull requests** in Settings →
+Actions → General. The release action uses the built-in `GITHUB_TOKEN`; it does
+not need an npm token.
 
 ## 2. Release Workflow
 
-Releases are automated by [semantic-release](https://github.com/semantic-release/semantic-release) on every push to `main` with conventional commits.
-
-```bash
-git commit -m "feat(skills): add example skill"
-git push origin main
-```
-
-GitHub Actions automatically:
-
-1. Analyzes commits and bumps semver
-2. Updates `CHANGELOG.md` and `package.json`
-3. Publishes to [npm](https://www.npmjs.com/package/bigpowers)
-4. Creates a GitHub Release and git tag
-
-Manual tagging (`git tag v1.0.0`) is not required.
-
-See `docs/RELEASE.md` and `.github/SEMANTIC-RELEASE.md` for commit format and troubleshooting.
+Use [versionedcommits messages](VERSIONEDCOMMITS.md). Read
+[release setup](../docs/RELEASE.md) for the installed versionedcommits action.
+Enable **Allow GitHub Actions to create and approve pull requests** in Settings →
+Actions → General. Releases use `GITHUB_TOKEN`; npm publication is not configured.
 
 ## 3. Sync Skills Workflow
 
@@ -53,9 +28,9 @@ git push origin main
 # Workflows enabled
 gh workflow list
 
-# NPM_TOKEN secret set
-gh secret list
+# Inspect release workflow configuration
+gh workflow view publish.yml
 
-# Latest published version
-npm view bigpowers version
+# Release tags in this fork
+git ls-remote --tags origin
 ```

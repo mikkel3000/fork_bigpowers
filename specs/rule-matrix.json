@@ -44,8 +44,8 @@
           "commit-message",
           "release-branch"
         ],
-        "id": "conventional-commits",
-        "text": "All commits follow Conventional Commits; semantic-release owns version bumps"
+        "id": "versionedcommits",
+        "text": "Use free-form messages and explicit versionedcommits release hints; see docs/RELEASE.md for the installed release action"
       },
       {
         "enforce": [

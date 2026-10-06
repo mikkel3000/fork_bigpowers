@@ -602,7 +602,7 @@ This review focused on improvement opportunities, but it's worth documenting wha
 
 2. **Gherkin compliance features** — the only framework with executable verification of its own principles. specs/verifications/features/ contains .feature files (cleancode.feature, akita.feature, conventions.feature, superpowers.feature, pocock.feature, karpathy.feature) that empirically prove compliance. npm run compliance audits all features. Score < 94% = hard stop.
 
-3. **semantic-release integration** — the only framework with automated semver via Conventional Commits. The real version is never hand-tracked — gh release view / git tags are authoritative.
+3. **versionedcommits integration** — explicit release hints drive SemVer through the installed release action. The real version is never hand-tracked — gh release view / git tags are authoritative.
 
 4. **next_skill signaling** — each critical-path skill writes handoff.next_skill to state.yaml as its last action. After any interruption, survey-context reads state.yaml and resumes exactly where you left off. Neither Superpowers, GSD, nor BMAD have this explicit handoff chain.
 

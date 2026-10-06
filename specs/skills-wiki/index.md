@@ -17,7 +17,7 @@ context: benchmark
 - [audit-plan](skills/audit-plan.md) — Evaluate an incoming project plan against bigpowers principles and conventions, 
 - [build-epic](skills/build-epic.md) — Eight-step epic build cycle — reads state.yaml, execution-status.yaml, and one e
 - [change-request](skills/change-request.md) — Add a new requirement or reorder epics by WSJF against specs/release-plan.yaml a
-- [commit-message](skills/commit-message.md) — Reviews working-tree changes, then drafts a Conventional Commits title/body and 
+- [commit-message](skills/commit-message.md) — Draft free-form messages with explicit versionedcommits release hints.
 - [compose-workflow](skills/compose-workflow.md) — Chain multiple bigpowers skills into a custom workflow recipe saved in specs/. U
 - [craft-skill](skills/craft-skill.md) — Create new bigpowers skills with proper structure, progressive disclosure, and b
 - [deepen-architecture](skills/deepen-architecture.md) — Find deepening opportunities in a codebase, informed by the domain language in s

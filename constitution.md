@@ -49,7 +49,7 @@ Boy Scout Rule, Law of Demeter, error messages that carry a remediation hint.
 - Deep modules, information hiding — `docs/PRINCIPLES.md` §2, `docs/references/ousterhout.md`, `docs/references/pocock.md`
 - Grep-ability, structured observability, remediation hints — `docs/PRINCIPLES.md` §5, `docs/references/akita.md`
 - SOLID, DRY, refactoring catalog, seams for testability — `docs/references/sandi-metz.md`, `docs/references/fowler.md`, `docs/references/uncle-bob.md`, `docs/references/feathers.md`, `docs/references/pragmatic-programmer.md`, `docs/references/rich-hickey.md`
-- Conventional Commits message mechanics — `docs/references/git-integration.md`
+- versionedcommits message mechanics — `docs/references/git-integration.md`
 
 ## B2 · Think-First Behavior
 

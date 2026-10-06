@@ -21,25 +21,40 @@ docs/references/*.md) into bigspec's B0-B10 + Capstone blocks, with citations
 back to the fuller text below. It's a starting point for a reader, not a
 replacement — this file remains fully authoritative for its own content today.
 
-## Conventional Commits & Semantic Versioning
+## versionedcommits & Semantic Versioning
 
-All changes to this repository MUST follow the [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) specification. Versioning MUST strictly adhere to [Semantic Versioning 2.0.0](https://semver.org/).
+Use [versionedcommits](https://github.com/mikkel3000/versionedcommits) with
+[Semantic Versioning 2.0.0](https://semver.org/). Write free-form commit subjects
+and bodies for maintainers. Release impact is explicit metadata on a new,
+unindented line: `@major` (breaking), `@minor` (compatible feature), or `@patch`
+(compatible fix). Internal-only changes may omit hints and produce no release.
 
-### Commit Message Format
-`<type>(<scope>): <description>` (Space after colon is MANDATORY)
+```text
+Handle missing catalog entries
 
-### Types & Version Bumps
-- `feat`: Minor (x.Y.z) - New feature
-- `fix`: Patch (x.y.Z) - Bug fix
-- `perf`: Patch (x.y.Z) - Performance improvement
-- `docs`, `chore`, `style`, `refactor`, `test`: No bump (unless breaking)
-- `BREAKING CHANGE:` (or `!` after type): Major (X.y.z)
+Return an actionable error instead of crashing during skill lookup.
+
+@patch Fixed crashes when a skill is unavailable
+Users now see which skill is missing and can select another one.
+@patch
+```
+
+A one-line hint with a note title needs no closing marker. For a description,
+close the block with the same bare hint. A bare hint alone reuses commit prose
+as the release note. Use `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, or
+`Security` at the start of note titles for changelog grouping. Keep subjects within
+72 characters and preserve metadata in the final squash commit body.
+
+Read [the agent reference](skills/commit-message/REFERENCE.md) for examples,
+parser rules, impact selection, and preview commands. The versionedcommits action
+creates a release PR and tags its merge after checks pass; see
+[release setup](docs/RELEASE.md).
 
 ## GitHub & Git Operations
 
 - No direct work on `main` or `master`. Every task MUST start with a feature branch or worktree via `kickoff-branch`.
 - **Integrate (team default):** Use `gh pr create` and `gh pr merge --squash` via `release-branch` (team-pr mode). Prefer `gh` over ad-hoc `git push` + manual PR UI.
-- **Integrate (solo profile):** When `profiles/solo-git.md` or `specs/WORKFLOW-solo-git.md` is active, ship with `bash scripts/land-branch.sh <branch> "<conventional message>"` after `release-branch` gates — local squash to `main`, then push. PR is optional (remote CI / branch protection only).
+- **Integrate (solo profile):** When `profiles/solo-git.md` or `specs/WORKFLOW-solo-git.md` is active, ship with `bash scripts/land-branch.sh <branch> "<versionedcommits message>"` after `release-branch` gates — local squash to `main`, then push. PR is optional (remote CI / branch protection only).
 - `git push origin <feature-branch>` is allowed for backup or CI; never push directly to `main`/`master` except via `land-branch.sh` (`GIT_BIGPOWERS_LAND=1`).
 - Use `gh repo clone` not `git clone` for GitHub repos
 - Use `gh run view` / `gh run watch` for CI status
@@ -99,7 +114,7 @@ Any **reproducible gate failure** encountered during unrelated work is a discove
 2. **fix-bug** — when quick-fix guardrails abort, or the failure needs investigation (`specs/bugs/BUG-*.md` + TDD).
 3. **Log** — only when reproduction is blocked after good-faith attempt; write a BUG spec and stop forward work on the original task until triaged.
 
-Discovered fixes ship in the **same PR** as the original work but in **separate commits** (Conventional Commits). Never narrate a failure and continue.
+Discovered fixes ship in the **same PR** as the original work but in **separate commits** (versionedcommits). Never narrate a failure and continue.
 
 **Hard block:** Red Preflight or red CI blocks kickoff-branch, develop-tdd, and verify-work forward progress until fix-or-log produces green.
 
@@ -122,7 +137,7 @@ Diff `specs/rule-matrix.json` across git tags to audit rule drift. Schema versio
 
 ### P1 — High (fix before merge)
 
-- **[conventional-commits]**: All commits follow Conventional Commits; semantic-release owns version bumps. (`commit-message`, `release-branch`)
+- **[versionedcommits]**: Use free-form messages and explicit versionedcommits release hints; see the release automation boundary above. (`commit-message`, `release-branch`)
 - **[verify-per-story]**: Every story/task has runnable `verify:` commands; `verify-work` confirms before done. (`plan-work`, `verify-work`)
 - **[test-on-change]**: New functions and bug fixes include tests; regressions get regression tests. (`develop-tdd`, `validate-fix`)
 - **[branch-protection]**: No direct work on `main`/`master`; feature branches via `kickoff-branch`. (`guard-git`)
@@ -209,13 +224,13 @@ When planning closes, copy to `specs/product/snapshots/release-<version>/` (`rel
 
 ### Semantic-release — the real version is never hand-tracked
 
-> **The authority is `gh release view` / git tags.** semantic-release decides the version
-> at merge from Conventional Commits. Never hand-maintain a `target_version` to "predict" it —
+> **The authority is `gh release view` / git tags.** versionedcommits derives the version from explicit hints
+> at merge from versionedcommits. Never hand-maintain a `target_version` to "predict" it —
 > that field drifts from reality every release. The specs only *mirror* the real tag for reference.
 
 1. **Planning intent (codename only)** — `specs/release-plan.yaml` → `release.version`, `release.bump_hint`.
    Treat `version` as a non-authoritative label; if you write a number, mark it "mirror, not the authority".
-2. **Published version (authority)** — repo root `package.json`, git tag `vX.Y.Z`, `CHANGELOG.md` (CI semantic-release; not hand-edited in specs). Read with `gh release view`.
+2. **Published version (authority)** — git tag `vX.Y.Z` and `CHANGELOG.md` (CI versionedcommits; not hand-edited in specs). Package versions are updated separately. Read with `gh release view`.
 3. **Dashboard mirror** — `specs/state.yaml` → `release.last_tag`, `release.last_publish` (copied from `gh release view`; `target_version` is `null` — not tracked manually).
 
 ### Guardrails and other artifacts
@@ -403,7 +418,7 @@ referencing the old name don't break immediately.
    different minor/major release train (major.minor) than the current version — that
    stub has served its one-release transition window and should be removed. Patch-only
    bumps within the same minor version don't count as a new release: this repo ships
-   via semantic-release on every merge to main, so comparing full semver strings would
+   via versionedcommits when release PRs merge, so comparing full semver strings would
    expire a tombstone within minutes of creation instead of giving consumers a real
    migration window.
 3. **Required alongside the first real use of `tombstone-skill.sh`:** update

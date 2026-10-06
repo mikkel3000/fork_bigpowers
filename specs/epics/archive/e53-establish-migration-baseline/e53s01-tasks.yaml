@@ -9,7 +9,7 @@ tasks:
     verify: "git status --short specs/benchmarks/reports/GOLDEN-2026-07-18.yaml | grep -q '^??' && echo OK"
     status: passing
   - id: 2
-    description: "git add and commit the GOLDEN baseline file on its own, Conventional Commits format (chore: track GOLDEN-2026-07-18 baseline)"
+    description: "git add and commit the GOLDEN baseline file on its own, versionedcommits format (chore: track GOLDEN-2026-07-18 baseline)"
     verify: "git log -1 --format=%s -- specs/benchmarks/reports/GOLDEN-2026-07-18.yaml | grep -qE '^(chore|fix)' && echo OK"
     status: passing
   - id: 3

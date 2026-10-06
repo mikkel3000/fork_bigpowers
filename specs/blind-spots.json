@@ -8515,9 +8515,9 @@
     },
     {
       "check": "double-tag",
-      "file": "specs/verifications/steps/then-it-must-mandate-conventional-commits-1-0-0-and-semver-2-0-0.sh",
+      "file": "specs/verifications/steps/then-it-must-mandate-versionedcommits-and-semver-2-0-0.sh",
       "severity": "MEDIUM",
-      "description": "File 'specs/verifications/steps/then-it-must-mandate-conventional-commits-1-0-0-and-semver-2-0-0.sh' is tagged with multiple stories: e53s01, e54s03",
+      "description": "File 'specs/verifications/steps/then-it-must-mandate-versionedcommits-and-semver-2-0-0.sh' is tagged with multiple stories: e53s01, e54s03",
       "remediation": "Review whether this file genuinely implements multiple stories. If it's a shared utility, this is acceptable."
     },
     {

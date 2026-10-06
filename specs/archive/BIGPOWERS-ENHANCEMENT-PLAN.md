@@ -223,7 +223,7 @@ Bigpowers 2.0 Core Workflow
 - Model: Sonnet
 
 #### Utility
-- `commit-message` — Conventional commits (automated, cheap)
+- `commit-message` — versionedcommits (automated, cheap)
 - `release-branch` — Git operations
 - `guard-git` — Pre-commit hooks
 - Model: Haiku (simple tasks)

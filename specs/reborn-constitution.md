@@ -68,7 +68,7 @@ One sizing unit runs the roadmap: it answers "how much effort is still left to f
 ### B10 · The Synthesis
 The blocks above are principles; this repo turns them into one executable discipline: a single fractal loop, one constitution, hard gates scaled by risk.
 - **Movements:** **Frame** — understand the problem and existing context; **Specify** — turn intent into a durable, testable spec; **Plan** — decompose, risk-tier (P0–P3), estimate (BCP), order; **Build** — TDD vertical slices in isolated worktrees; **Prove** — verify by the risk tier assigned in Plan, then ship.
-- **Rules:** the loop (Frame → Specify → Plan → Build → Prove → ship) runs identically at project, epic, and story scope; **every skill maps to exactly one movement** (see B3); the spec is the invariant across every movement; the constitution is one file; semantic-release derives version truth from Conventional Commits.
+- **Rules:** the loop (Frame → Specify → Plan → Build → Prove → ship) runs identically at project, epic, and story scope; **every skill maps to exactly one movement** (see B3); the spec is the invariant across every movement; the constitution is one file; versionedcommits derives release versions from explicit hints.
 - **Provenance:** BMAD (document lifecycle) + GSD (execution framework), synthesized. Full architecture: [`BIGPOWERS-REBORN.md`](BIGPOWERS-REBORN.md) §4.
 
 ### ★ Capstone · Outcome Evals
@@ -97,7 +97,7 @@ The fast lane exists so gate discipline never becomes gate fatigue.
 
 The concrete rules every change must satisfy. These make the repo pass its own craftsmanship features by construction.
 
-- **Commits & versions:** Conventional Commits 1.0.0; SemVer 2.0.0; version truth comes from tags/semantic-release, never hand-edited.
+- **Commits & versions:** versionedcommits; SemVer 2.0.0; version truth comes from released tags, never hand-edited.
 - **Branches:** never work directly on `main`/`master`; feature branches in worktrees.
 - **Size:** functions 4–20 lines; files < 300 lines (documented exceptions only, in a table with a split-candidate note).
 - **Structure:** SRP per module; dependencies injected, not global; nesting ≤ 2 levels.

@@ -110,7 +110,7 @@ If this cycle modified files in `.github/workflows/`, run the CI dry-run procedu
 [ ] Code is minimal for this test
 [ ] No speculative features added
 [ ] Every new abstraction has an explicit "Reason for Depth" justification
-[ ] Progress committed (Conventional Commits)
+[ ] Progress committed (versionedcommits)
 [ ] verify: command passes
 ```
 

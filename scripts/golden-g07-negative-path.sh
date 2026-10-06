@@ -44,7 +44,7 @@ TESTS=(
   "and-files-should-be-small-enough-to-avoid-context-window-truncation-300-lines.sh|300-line cap: fixture has a 350-line script"
   "and-files-should-remain-under-500-lines-newspaper-metaphor.sh|500-line cap: fixture has a 550-line step script"
   "and-it-must-mandate-file-size-limits-300-lines.sh|CONVENTIONS.md: missing '300 lines' mandate"
-  "then-it-must-mandate-conventional-commits-1-0-0-and-semver-2-0-0.sh|CONVENTIONS.md: missing Conventional Commits mandate"
+  "then-it-must-mandate-versionedcommits-and-semver-2-0-0.sh|CONVENTIONS.md: missing versionedcommits mandate"
   "then-skills-should-include-bold-hard-gate-callout-blocks.sh|SKILL.md: missing HARD GATE blocks"
 )
 

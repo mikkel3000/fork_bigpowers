@@ -80,7 +80,7 @@ either file yet.
    exists as the consolidated doctrine entry point, with one line per block it
    covers isn't needed — just the pointer and what it's for.
 2. Add an equivalent short pointer section near the top of `CONVENTIONS.md`
-   (after its `# story:` tag block, before "Conventional Commits & Semantic
+   (after its `# story:` tag block, before "versionedcommits & Semantic
    Versioning").
 3. Both pointers state plainly that `CLAUDE.md`/`CONVENTIONS.md` remain fully
    authoritative for their own content today — the pointer is additive

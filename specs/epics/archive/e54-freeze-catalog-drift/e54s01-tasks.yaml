@@ -37,7 +37,7 @@ tasks:
         - "Catalog Freeze"
         - "integration"
   - id: 4
-    description: "Commit the baseline snapshot file on its own, Conventional Commits format (chore: freeze skill catalog baseline for e54-e59 migration). Immutability comes from git history + the header commit hash, not a lock file."
+    description: "Commit the baseline snapshot file on its own, versionedcommits format (chore: freeze skill catalog baseline for e54-e59 migration). Immutability comes from git history + the header commit hash, not a lock file."
     verify: "git log -1 --format=%s -- specs/tech-architecture/CATALOG-BASELINE-*.yaml | grep -qE '^(chore|feat)' && echo OK"
     risk: P2
     status: passing

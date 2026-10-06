@@ -67,7 +67,7 @@ Step 3  kickoff-branch    ← creates worktree + feature branch
 Step 4  develop-tdd       ← RED → GREEN → REFACTOR (vertical slices)
 Step 5  verify-work       ← UAT gate (developer confirms behavioral correctness)
 Step 6  audit-code        ← quality gate ≥ 94%
-Step 7  commit-message    ← Conventional Commits + semver bump
+Step 7  commit-message    ← versionedcommits + semver bump
 Step 8  release-branch    ← land to main; stamps story_end + writes cycle-times.yaml
 ```
 
@@ -124,7 +124,7 @@ release-branch    → survey-context (next story) | semantic-release (all done)
 
 ## Related Documents
 
-- [`CONVENTIONS.md`](../CONVENTIONS.md) — Git rules, code style, Conventional Commits format
+- [`CONVENTIONS.md`](../CONVENTIONS.md) — Git rules, code style, versionedcommits format
 - [`docs/PRINCIPLES.md`](PRINCIPLES.md) — Seven philosophical layers (Uncle Bob → BMAD synthesis)
 - [`docs/references/workflow-steps.md`](references/workflow-steps.md) — Per-step operational detail (Phases 0–8)
 - [`docs/references/workflow-artifacts.md`](references/workflow-artifacts.md) — Artifact inventory, metrics, dashboard, semver

@@ -103,7 +103,7 @@ Placement: top of SKILL.md, after the title and description, before the workflow
 
 | Skill | HARD GATE |
 |-------|-----------|
-| `commit-message` | Commits must follow Conventional Commits. Message must explain "why," not "what." |
+| `commit-message` | Commits must follow versionedcommits. Message must explain "why," not "what." |
 | `release-branch` | Do NOT merge if tests fail or coverage gates are not met |
 
 ### Sustain Phase

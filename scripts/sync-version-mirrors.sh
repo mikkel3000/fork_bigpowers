@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # story: e38s08
 # sync-version-mirrors.sh — bump version mirrors across all config files
-# Called by: @semantic-release/exec prepareCmd during release
+# Manual utility for a separately authorized package release; see docs/RELEASE.md.
 # Usage: bash scripts/sync-version-mirrors.sh <version>
 #
-# Runs AFTER @semantic-release/npm has bumped package.json (so derived
+# Run after updating package.json (so derived
 # artifacts like .gemini/ and .pi/ read the new version from there).
-# Runs BEFORE @semantic-release/git commits everything.
+# Review and commit resulting mirror changes as part of that package release.
 
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/lib/python-env.sh"

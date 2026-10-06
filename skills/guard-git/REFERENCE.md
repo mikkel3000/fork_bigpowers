@@ -155,10 +155,10 @@ echo '{"tool_input":{"command":"git push -u origin feat/my-task"}}' | ./pre-tool
 # Expected: exit 0
 ```
 
-**4. Conventional Commits (Gemini mode):**
+**4. versionedcommits (Gemini mode):**
 ```bash
-echo '{"tool_input":{"command":"git commit -m \"bad message\""}}' | GIT_GUARDRAILS_MODE=gemini ./pre-tool-use.sh
-# Expected: exit 0, {"decision":"deny", "reason":"..."}
+echo '{"tool_input":{"command":"git commit -m \"Explain the implementation\""}}' | GIT_GUARDRAILS_MODE=gemini ./pre-tool-use.sh
+# Run on a feature branch. Expected: exit 0, {"decision":"allow"}
 ```
 
 **5. Protected Branch commit (Cursor mode):**

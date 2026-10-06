@@ -121,14 +121,14 @@ ONCE/PROJECT orchestrate-project
               │   4. develop-tdd      ← RED → GREEN → REFACTOR
               │   5. verify-work      ← UAT gate
               │   6. audit-code       ← quality gate ≥ 94%
-              │   7. commit-message   ← Conventional Commits + semver
+              │   7. commit-message   ← versionedcommits + semver
               │   8. release-branch   ← land to main; writes story_end + cycle-times.yaml
               │
               ├─ Ph5 VERIFY     run-evals, verify-work (project-level)
               └─ Ph6 RELEASE    semantic-release → v1.0.0 MVP tag
 ```
 
-**Semver:** projects start at `0.0.0-β`; each `feat:` story → minor bump; developer declares MVP → `1.0.0`.
+**Semver:** projects start at `0.0.0-β`; explicit `@minor` release hints → minor bump; developer declares MVP → `1.0.0`.
 
 **BCP accounting:** every task labeled `[BCP N]`; story total in `state.yaml`; BCP/hr logged to `specs/metrics/cycle-times.yaml`.
 
@@ -358,7 +358,7 @@ npm run validate-specs
 1. Fork the repo.
 2. Create a feature branch (`git checkout -b feature/my-thing`).
 3. Make your changes using the `bigpowers` methodology.
-4. Commit using Conventional Commits (`git commit -am 'feat: add my thing'`).
+4. Draft a [versionedcommits message](skills/commit-message/REFERENCE.md) with a free-form subject and explicit release hints when needed.
 5. Push to the branch (`git push origin feature/my-thing`).
 6. Open a Pull Request.
 

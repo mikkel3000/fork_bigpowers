@@ -196,7 +196,7 @@ Run stocktake-skills again to confirm 100% HARD GATE compliance
 - [ ] Artifacts (.cursor/rules, .gemini/) regenerated
 - [ ] stocktake-skills audit returns 0 missing HARD GATEs
 - [ ] No SKILL.md files exceed 300 lines
-- [ ] All changes committed with conventional message: `refactor(skills): add HARD GATE enforcement to 35 skills`
+- [ ] All changes committed with versionedcommits message: `refactor(skills): add HARD GATE enforcement to 35 skills`
 
 ## Risks & Mitigations
 

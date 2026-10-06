@@ -4,90 +4,13 @@
 
 ---
 
-## Commit Message Format (Conventional Commits)
+## Commit messages and releases
 
-**Format:** `<type>(<scope>): <subject>`
-
-### Types
-- `feat` — New feature
-- `fix` — Bug fix
-- `refactor` — Code restructuring (no behavior change)
-- `test` — Test-only changes
-- `docs` — Documentation only
-- `chore` — Dependencies, build, config
-- `perf` — Performance optimization
-
-### Scope
-- Optional, but recommended
-- Skill name, module, or affected area
-- Example: `feat(plan-work): add slopcheck integration`
-
-### Subject
-- Imperative mood ("add" not "adds" or "added")
-- No period at end
-- <50 characters
-- Lowercase
-
-### Body
-- Optional, but recommended for non-trivial changes
-- Explain WHY, not WHAT
-- Wrap at 72 characters
-- Separate from subject with blank line
-
-### Example
-
-```
-feat(v2.0.0): orchestrate skill + context isolation
-
-- Add orchestrate skill enforcing 6-phase core loop with gates
-- Implement context isolation (fresh 200K per skill spawn)
-- Add slopcheck security gate before package recommendations
-- Update 5 core skills with explicit files_to_read sections
-- Generate 11 reference library documents
-
-This enables production-grade orchestration with hard gates,
-preventing scope creep and ensuring consistent quality.
-
-Fixes #456 (GitHub issue)
-```
-
----
-
-## Branching Strategy (Automated Semantic Release)
-
-### Main Branch Rules
-- `main` is the canonical source of truth and the only branch that triggers production releases.
-- **NEVER** commit directly to `main`. All changes must arrive via a Pull Request.
-- **Releases are automated**: Every merge to `main` triggers `semantic-release`, which analyzes the commit history, determines the version bump (SemVer), creates a Git tag, and generates a changelog.
-- **Tags**: Automated tags use the `vX.Y.Z` format.
-
-### Feature Branches
-```bash
-# 1. Create feature branch from main
-git checkout -b feat/orchestrate-skill
-
-# 2. Commit frequently using Conventional Commits
-git commit -m "feat(orchestrate): add 6-phase core loop"
-git commit -m "fix(orchestrate): handle null context"
-
-# 3. Keep branch up to date
-git fetch origin main
-git rebase origin/main
-
-# 4. Create PR
-gh pr create --title "feat(orchestrate): add 6-phase core loop" --body "..."
-```
-
-### The Release Process (CI-Driven)
-Manual release branches (`release/v1.0.0`) are **deprecated**. Versioning is reactive:
-1. **Merge**: When a PR is merged via **Squash and Merge**, the PR title is used as the commit message.
-2. **Analysis**: `semantic-release` runs on the CI for the `main` branch.
-3. **Automated Bump**: 
-   - `fix:` commits → **Patch** bump (1.0.0 → 1.0.1)
-   - `feat:` commits → **Minor** bump (1.0.0 → 1.1.0)
-   - `BREAKING CHANGE:` or `!:` → **Major** bump (1.0.0 → 2.0.0)
-
----
+Use [versionedcommits](../../skills/commit-message/REFERENCE.md): free-form
+maintainer prose plus explicit `@major`, `@minor`, or `@patch` metadata for users.
+Internal-only changes need no hint. Detailed notes use matching closing hints.
+Preserve the intended hints in the final squash commit body, not just the PR title.
+See [release setup](../RELEASE.md) for the installed release action.
 
 ## Worktree Usage (Parallel Work)
 

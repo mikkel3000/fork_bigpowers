@@ -1,142 +1,45 @@
-# Release & Publishing Guide
+# Release & publishing guide
 
-Package: [bigpowers on npm](https://www.npmjs.com/package/bigpowers)
+This repository uses [versionedcommits](https://github.com/mikkel3000/versionedcommits)
+through `.github/workflows/publish.yml`. Commit subjects are free-form; explicit
+`@major`, `@minor`, and `@patch` hints drive release notes and the next SemVer tag.
+See the [agent reference](../skills/commit-message/REFERENCE.md) for message syntax.
 
-## Quick Start
+## Installed workflow
 
-### 1. Setup (one-time)
+The caller runs on pushes to `main`, closed PRs targeting `main`, and manual dispatch.
+Skill-health and compliance jobs must both pass before the reusable workflow runs.
+The upstream workflow is pinned to commit
+`eb9ac58a58fb9ef7ed92802cbdcc244106e3e8b0`; the README's `v0.1.0` tag predates that
+workflow, so it is not a usable workflow reference.
 
-```bash
-# Add NPM_TOKEN to GitHub Secrets
-# → GitHub repo → Settings → Secrets and variables → Actions
-# → New secret: NPM_TOKEN (from npmjs.org → Access Tokens)
+1. Hinted commits cause the action to create or update a PR from
+   `versionedcommits/release` containing the final versioned changelog entry.
+2. Review and merge that PR. The closed-PR event verifies the changelog and creates
+   the release tag on its merge commit.
+3. Commits without release hints do not request a release. The highest hint since
+   the latest stable semantic tag determines the next version.
 
-# Commit setup
-git add .github/ .releaserc.json .gitmessage package.json package-lock.json
-git commit -m "chore: add semantic-release automation"
-git push origin main
-```
+In repository Settings → Actions → General, enable **Allow GitHub Actions to
+create and approve pull requests**. The action uses `GITHUB_TOKEN` with
+`contents: write`, `pull-requests: write`, and `statuses: write`. No extra secret is
+needed. Its `versionedcommits/release-pr` status marks generated release PRs ready.
 
-### 2. Making Releases
+The old semantic-release job, configuration, npm script, and dependencies are
+removed. The new workflow manages changelog PRs and Git tags. It does not publish
+npm packages, create GitHub Release objects, or update `package.json` and version
+mirrors. Package publication is a separate workflow and is not configured here.
+For a separately authorized package release, update the package version and use
+`bash scripts/sync-version-mirrors.sh <version>` to refresh its mirrors.
 
-**Just commit with conventional messages:**
+## Local preview
 
-```bash
-git commit -m "feat(new-skill): add orchestrate-project skill"
-git commit -m "fix(sync-skills): handle missing directories"
-git push origin main
-```
-
-**Automatically:**
-- ✅ Analyzes commits
-- ✅ Bumps version (semver)
-- ✅ Updates CHANGELOG.md
-- ✅ Creates git tag (v1.2.3)
-- ✅ Publishes to npm
-- ✅ Creates GitHub Release
-
-### 3. Check Release Status
-
-```bash
-# View Actions
-# GitHub → Actions → Release workflow
-
-# View published version
-npm view bigpowers
-
-# View releases
-# GitHub → Releases
-```
-
-## Per-Project Semver Convention (v2.0.0)
-
-When using bigpowers to build a *project* (not the bigpowers package itself), the recommended semver lifecycle is:
-
-| Stage | Version | How |
-|-------|---------|-----|
-| Pre-delivery | `0.0.0-β` | Initial state after `seed-conventions` |
-| Each `feat:` story lands | `0.1.0`, `0.2.0`, … | `semantic-release` minor bump |
-| Developer declares MVP | `1.0.0` | Allow the `1.0.0` tag in release config |
-| Post-MVP features | `1.1.0`, `1.2.0`, … | Normal semver from Conventional Commits |
-
-> This keeps all pre-MVP work in the `0.x.x` range, making the `1.0.0` tag a meaningful project milestone rather than an arbitrary number.
-
----
-
-## Commit Message Format
-
-**Required for automatic releases:**
-
-```
-feat(scope): description          # Minor version bump (0.1.0 → 0.2.0 or 1.0.0 → 1.1.0)
-fix(scope): description           # Patch version bump (1.0.0 → 1.0.1)
-docs: description                 # No version bump
-```
-
-**Examples:**
-```
-feat(skills): add new craft-skill command
-fix(sync): handle edge case in directory creation
-docs: update README with examples
-feat(develop-tdd)!: redesign test structure  # Major bump (BREAKING)
-```
-
-See `.github/CONVENTIONAL-COMMITS.md` for full format.
-
-## Manual Release (Local)
-
-For full semantic-release (GitHub + npm + changelog):
+With the upstream binary installed and the intended commits present:
 
 ```bash
-export GITHUB_TOKEN=$(gh auth token)
-export NPM_TOKEN=[from npmjs.org]
-
-npm run release
+versionedcommits --format json
+versionedcommits --next-tag
 ```
 
-To publish the current `package.json` version to npm only:
-
-```bash
-npm publish
-```
-
-## Version History
-
-All releases in:
-- `CHANGELOG.md` — generated from commits
-- GitHub → Releases — GitHub release page
-- `npm view bigpowers versions` — all npm versions
-
-## Troubleshooting
-
-**No release created after push?**
-→ Commits may not follow conventional format
-→ Check Actions log: GitHub → Actions → Release workflow
-
-**"ENOAUTH" error?**
-→ Verify NPM_TOKEN in GitHub Secrets
-
-**Want to skip release for a commit?**
-→ Add `[skip ci]` in commit message:
-```
-chore: update docs [skip ci]
-```
-
-## Architecture
-
-- `.releaserc.json` — configuration
-- `.github/workflows/publish.yml` — GitHub Actions workflow
-- `.gitmessage` — commit template (optional)
-- `package.json` — version source of truth
-- `CHANGELOG.md` — auto-generated release notes
-
-See `.github/SEMANTIC-RELEASE.md` for detailed setup.
-
-## v3.0 Launch Note — Semantic Bridge
-
-The v3.0 "Semantic Bridge" release ships the **public receipts page** as its
-centerpiece: a live evidence dashboard at `/receipts` that renders bigpowers'
-own quality metrics — each with provenance and freshness. Every section degrades
-to "not yet measured" — this page never fabricates a number.
-
-See the [receipts page](https://danielvm-git.github.io/bigpowers/receipts/) for live data.
+These commands preview notes and the next tag without changing Git history.
+The CI workflow manages release tags; do not run a competing local tag writer.

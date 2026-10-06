@@ -16134,7 +16134,7 @@
           "method": "explicit_tag"
         },
         {
-          "file": "specs/verifications/steps/then-it-must-mandate-conventional-commits-1-0-0-and-semver-2-0-0.sh",
+          "file": "specs/verifications/steps/then-it-must-mandate-versionedcommits-and-semver-2-0-0.sh",
           "line": 0,
           "confidence": "medium",
           "method": "file_heuristic"
@@ -16824,7 +16824,7 @@
           "method": "file_heuristic"
         },
         {
-          "file": "specs/verifications/steps/then-it-must-mandate-conventional-commits-1-0-0-and-semver-2-0-0.sh",
+          "file": "specs/verifications/steps/then-it-must-mandate-versionedcommits-and-semver-2-0-0.sh",
           "line": 0,
           "confidence": "medium",
           "method": "file_heuristic"

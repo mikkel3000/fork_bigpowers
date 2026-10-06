@@ -51,7 +51,7 @@ stories:
       WHEN one feature epic is built via the full 8-step cycle
       THEN the repo's history shows the complete trail: story spec, tasks
         with verify commands, TDD commits, verify-work UAT record,
-        audit-code score, Conventional Commit landing
+        audit-code score, versionedcommits landing
       AND cycle-time metrics are recorded via record-cycle-time.sh (e40
         pipeline — never hand-arithmetic).
     tasks_list:

@@ -3,7 +3,7 @@
 # bigpowers — pre-tool-use hook for OMP bash tool
 # Shell fallback for runtimes that invoke hooks as processes rather than
 # calling the TypeScript extension directly. Blocks dangerous git commands
-# and enforces Conventional Commits. Primary implementation lives in
+# and permits versionedcommits free-form messages. Primary implementation lives in
 # extensions/omp-hooks.ts (ExtensionAPI tool_call handler).
 set -euo pipefail
 
@@ -19,7 +19,6 @@ DANGEROUS_PATTERNS=(
   "push -f"
 )
 PROTECTED_BRANCHES=("main" "master")
-CONVENTIONAL_RE='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^)]+\))?!?:[[:space:]].+'
 
 for p in "${DANGEROUS_PATTERNS[@]}"; do
   if echo "$COMMAND" | grep -qE "$p"; then
@@ -29,12 +28,6 @@ for p in "${DANGEROUS_PATTERNS[@]}"; do
 done
 
 if [[ "$COMMAND" =~ git[[:space:]]+commit ]]; then
-  MSG=""
-  if [[ "$COMMAND" =~ -m[[:space:]]+"([^"]+)" ]]; then MSG="${BASH_REMATCH[1]}"; fi
-  if [ -n "$MSG" ] && [[ ! "$MSG" =~ $CONVENTIONAL_RE ]]; then
-    echo '{"decision":"block","reason":"BLOCKED: Conventional Commits required"}'
-    exit 0
-  fi
   BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
   for b in "${PROTECTED_BRANCHES[@]}"; do
     if [[ "$BRANCH" == "$b" ]]; then

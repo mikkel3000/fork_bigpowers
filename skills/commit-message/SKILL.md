@@ -2,56 +2,58 @@
 name: commit-message
 model: haiku
 effort: standard
-description: Reviews working-tree changes, then drafts a Conventional Commits title/body and states the semantic-release version bump a single such commit would imply. Also notes which defensive-code categories were touched. Use when the user wants to commit recent work, prepare a Conventional Commits message, or asks for semantic-release / semver-consistent messaging before git commit.
+description: Review working-tree changes and draft a free-form versionedcommits message with explicit release hints and user-facing notes. Use when preparing a commit or explaining its SemVer impact.
 ---
 
 # story: e82s02
 
 # Commit Message
-> **HARD GATE** — **HARD GATE** — Commits must follow Conventional Commits spec (type(scope): description). Do NOT use vague messages like 'fix' or 'updates.' The message must explain the 'why,' not the 'what.'
 
+> **HARD GATE** — Explain the change and its reason. Use versionedcommits metadata
+> for release impact: `@major`, `@minor`, or `@patch` on a separate unindented line.
+> Never infer a bump from the subject prefix. Internal-only work can omit a hint.
 
-## Modes
+## Workflow
 
-- Default: standard Conventional Commits message
-- --fix-type: Forces type=fix. Use when commit type is unambiguous.
+1. Read `specs/state.yaml` `vcs.kind`. For Git, inspect `git status`, `git diff`, and
+   `git diff --cached`; for Jujutsu, inspect `jj status`, `jj diff`, and `jj log -r @`.
+   Base the proposed commit on the changes that will actually be included.
+2. Use conversation context to explain intent and identify incompatible behavior.
+   Separate unrelated changes into atomic commits when appropriate.
+3. Choose impact: `@major` for breaking behavior, `@minor` for a compatible feature,
+   `@patch` for a compatible fix, or no hint for internal work with no release.
+4. Write a free-form subject (at most 72 characters) and optional implementation
+   body. Add a user-facing release note separately; follow [REFERENCE.md](REFERENCE.md)
+   for matching block delimiters, bare-hint fallback, and squash handling.
+5. Report relevant defensive-code categories: rate limiting, retry/backoff,
+   circuit breaker, timeout, graceful degradation. Existing fix-ratio metrics
+   based on `fix:` prefixes are legacy and cannot classify free-form subjects;
+   do not distort the message or claim a recalculated ratio from those prefixes.
+6. Deliver the complete proposed message and its explicit impact (`major`, `minor`,
+   `patch`, or `none`). Distinguish this commit's impact from the aggregate next
+   release. Drafting a message does not authorize committing or publishing.
 
-## What "last chat" means
+## Example
 
-- **Primary source of truth:** Read `state.yaml` `vcs.kind`. Git uses `git status`, `git diff`, and `git diff --cached`; Jujutsu uses `jj status`, `jj diff`, and `jj log -r @`. Run in the repo root.
-- **Context:** use the current conversation to summarize *intent* and to spot **breaking** API/behavior changes that diff alone may not show.
-- If the user tracks a session baseline (e.g. branch, tag, or `git stash create` at start), you may `git diff <baseline>..HEAD` plus uncommitted diffs; otherwise use only the index and working tree.
+```text
+Handle missing catalog entries
 
-## Quick workflow
+Return an actionable error instead of crashing during skill lookup.
 
-1. **Inventory** — List changed paths; group by feature vs chore vs docs vs test-only.
-2. **Decide commit shape** — One atomic commit is ideal. If the diff mixes unrelated concerns, recommend **multiple commits** (each with its own type/scope) before suggesting one message.
-3. **Classify for semantic release** — `fix` → patch, `feat` → minor, **breaking** → major.
-4. **Write the message** — `type(optional-scope)!: description` (see [REFERENCE.md](REFERENCE.md#message-format)). Use `!` or a `BREAKING CHANGE:` footer when behavior contracts change.
-5. **Note defensive-code categories touched** — from CONVENTIONS.md: Rate limit | Retry with backoff | Circuit breaker | Timeout | Graceful degradation
-6. **Note fix-ratio contribution** — Each `fix:` commit counts toward `metrics.commit_ratio.fix` in `specs/state.yaml`. After `release-branch`, `session-state` recalculates the ratio automatically. A high fix rate (>30%) triggers a deploy + smoke-test suggestion.
-7. **Deliver** — Output:
-   - Proposed **full commit message** (title + optional body + footers).
-   - **Release bump** this commit would drive: `patch` | `minor` | `major` | `none`.
-   - Optional native command: Git `git commit -m`; Jujutsu `jj commit -m`. Never omit `-m` or run destructive commands unless asked.
+@patch Fixed crashes when a skill is unavailable
+Users now see which skill is missing and can select another one.
+@patch
+```
 
-## Checklist before finalizing
+## Checklist
 
-- [ ] Type matches the **dominant** user-visible outcome (`feat` vs `fix` vs `perf`, etc.).
-- [ ] **Scope** is a short noun in parentheses if it helps (e.g. `fix(api): …`).
-- [ ] Breaking changes are explicit (`!` and/or `BREAKING CHANGE:` in the body/footer).
-- [ ] Description is imperative, lowercase start after the prefix, no trailing period in the title line.
-- [ ] **NO `Co-authored-by` or `Co-Authored-By` footers** — P1 rule (CONVENTIONS.md § Git Attribution). All commits must appear as if authored solely by the human user. The git hook and `land-branch.sh` both block these.
-
-## When not to invent a bump
-
-If the repo uses a custom `@semantic-release/commit-analyzer` preset, note that your bump is **heuristic** and they should match `.releaserc` / `release.config.*`. See [REFERENCE.md](REFERENCE.md#custom-repositories).
-
-## Further reading
-
-- [REFERENCE.md](REFERENCE.md) — Message shape, footers, release mapping, squashing notes.
-
-
+- [ ] Subject and body explain the actual change; no prescribed type/scope prefix.
+- [ ] Release hint matches compatibility impact; breaking changes include migration guidance.
+- [ ] Detailed release notes end with the same bare hint on its own line.
+- [ ] No hint is invented for internal-only work; no bump is inferred from title wording.
+- [ ] Final squash/merge message preserves the intended release metadata.
+- [ ] No `Co-authored-by` footers, per the repository attribution rule.
+- [ ] For other repositories, verify that their release automation consumes versionedcommits hints.
 
 ## Handoff
 

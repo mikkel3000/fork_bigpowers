@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
 # land-branch.sh — Solo-local integrate: squash-merge feature branch onto main and push.
 # Requires GIT_BIGPOWERS_LAND=1 for hook exceptions on commit/push to protected branches.
-# Usage: bash scripts/land-branch.sh <feature-branch> "<conventional commit message>"
+# Usage: bash scripts/land-branch.sh <feature-branch> "<versionedcommits message>"
 # Run from the primary repository root (not a linked worktree).
 set -euo pipefail
 
 # shellcheck source=lib/land-branch-push.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib/land-branch-push.sh"
 
-CONVENTIONAL_REGEX='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?!?: .+'
-
 usage_land() {
-  echo "Usage: $0 <feature-branch> \"<conventional commit message>\" [--skip-verify]" >&2
+  echo "Usage: $0 <feature-branch> \"<versionedcommits message>\" [--skip-verify]" >&2
   echo "  Run from primary repo root after release-branch gates (solo-local mode)." >&2
   exit 1
 }
@@ -36,14 +34,14 @@ COMMIT_MSG="${ARGS[1]:-}"
 
 [ -n "$FEATURE_BRANCH" ] && [ -n "$COMMIT_MSG" ] || usage_land
 
-# Both checks below judge the subject line, not the whole message. The length
-# test used to read ${#COMMIT_MSG}, so any Conventional Commit carrying a body
+# The checks below judge the subject line, not the whole message. The length
+# test used to read ${#COMMIT_MSG}, so any commit carrying a body
 # was rejected no matter how short its subject — the error text said "subject
 # line" while the check measured the entire string.
 COMMIT_SUBJECT="${COMMIT_MSG%%$'\n'*}"
 
-if [[ ! "$COMMIT_SUBJECT" =~ $CONVENTIONAL_REGEX ]]; then
-  land_branch_deny "Commit message must follow Conventional Commits: <type>(<scope>): <subject>"
+if [[ ! "$COMMIT_SUBJECT" =~ [^[:space:]] ]]; then
+  land_branch_deny "Commit subject must not be blank"
 fi
 
 if [ ${#COMMIT_SUBJECT} -gt 72 ]; then
@@ -223,5 +221,5 @@ else
   echo "  cwd:      $(pwd)"
   echo "  current:  $(git branch --show-current)"
   echo ""
-  echo "semantic-release will pick up the push to $DEFAULT_BRANCH when configured."
+  echo "versionedcommits consumes explicit release hints when its release workflow is configured."
 fi

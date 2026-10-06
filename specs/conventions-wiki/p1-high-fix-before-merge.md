@@ -6,7 +6,7 @@ context: conventions
 
 # P1 — High (fix before merge)
 
-- **[conventional-commits]**: All commits follow Conventional Commits; semantic-release owns version bumps. (`commit-message`, `release-branch`)
+- **[versionedcommits]**: Use free-form messages and explicit versionedcommits release hints; see docs/RELEASE.md for the installed release action. (`commit-message`, `release-branch`)
 - **[verify-per-story]**: Every story/task has runnable `verify:` commands; `verify-work` confirms before done. (`plan-work`, `verify-work`)
 - **[test-on-change]**: New functions and bug fixes include tests; regressions get regression tests. (`develop-tdd`, `validate-fix`)
 - **[branch-protection]**: No direct work on `main`/`master`; feature branches via `kickoff-branch`. (`guard-git`)

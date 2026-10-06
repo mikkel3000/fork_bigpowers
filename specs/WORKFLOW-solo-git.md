@@ -1,6 +1,6 @@
 # WORKFLOW: solo-git
 
-**Trigger:** Use when working alone and PRs feel like overhead; you still want protected `main`, worktrees, Conventional Commits, and semantic-release.
+**Trigger:** Use when working alone and PRs feel like overhead; you still want protected `main`, worktrees, versionedcommits.
 
 **Profile:** [profiles/solo-git.md](../profiles/solo-git.md)
 
@@ -19,7 +19,7 @@
 | 5 | run-evals | EVALS doc (if applicable) | `test -f specs/EVALS-*.md 2>/dev/null \|\| true` |
 | 6 | verify-work | UAT evidence | branch ≠ main |
 | 7 | audit-code | checklist pass | (dialogue) |
-| 8 | commit-message | conventional message | message matches regex |
+| 8 | commit-message | versionedcommits message | message matches regex |
 | 9 | release-branch (solo-local) | land on main | `bash scripts/land-branch.sh <slug> "<msg>"` |
 | 10 | session-state | STATE.md | `git branch --show-current` = main |
 

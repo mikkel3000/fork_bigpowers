@@ -18,12 +18,12 @@
     },
     "audit-plan": {
       "description": "Evaluate an incoming project plan against bigpowers principles and conventions, surface gaps, and produce a READY/NOT READY verdict before engagement begins. Use when a new project arrives, when adapting a foreign plan, or before running seed-conventions on an unfamiliar codebase.",
-      "sha256": "df080669a1ef7c36",
+      "sha256": "5f70a11895d1a27b",
       "path": "skills/audit-planSKILL.md"
     },
     "build-epic": {
       "description": "Eight-step epic build cycle — reads state.yaml, execution-status.yaml, and one epic capsule; updates status via bp-yaml-set or direct edit. Resume mode runs one step per invocation. Use instead of ad-hoc execute-plan for release work.",
-      "sha256": "a647425c700b9020",
+      "sha256": "b31c0237c31cd28b",
       "path": "skills/build-epicSKILL.md"
     },
     "change-request": {
@@ -32,8 +32,8 @@
       "path": "skills/change-requestSKILL.md"
     },
     "commit-message": {
-      "description": "Reviews working-tree changes, then drafts a Conventional Commits title/body and states the semantic-release version bump a single such commit would imply. Also notes which defensive-code categories were touched. Use when the user wants to commit recent work, prepare a Conventional Commits message, or asks for semantic-release / semver-consistent messaging before git commit.",
-      "sha256": "3c1413ae4e3c1476",
+      "description": "Review working-tree changes and draft a free-form versionedcommits message with explicit release hints and user-facing notes. Use when preparing a commit or explaining its SemVer impact.",
+      "sha256": "f181c4c922534228",
       "path": "skills/commit-messageSKILL.md"
     },
     "compose-workflow": {
@@ -83,7 +83,7 @@
     },
     "develop-tdd": {
       "description": "Test-driven development with red-green-refactor loop using vertical slices. Use for features (epic tasks) or bugs (specs/bugs/BUG-*.md).",
-      "sha256": "433c1315e6604899",
+      "sha256": "85028cab30b2e682",
       "path": "skills/develop-tddSKILL.md"
     },
     "diagnose-root": {
@@ -162,8 +162,8 @@
       "path": "skills/grill-with-docsSKILL.md"
     },
     "guard-git": {
-      "description": "Block dangerous git commands (push, force push, reset --hard, clean, branch -D, checkout/restore .) and enforce Conventional Commits & Branch Protection before an AI agent runs them. Installs hook scripts for Claude Code, Cursor, Cursor CLI, and Gemini CLI; documents Google Antigravity Terminal deny lists. Use when the user wants git safety hooks, to block git push or destructive git in agents, or to mirror the same policy across AI coding tools.",
-      "sha256": "e7083cba6d95a15f",
+      "description": "Block dangerous git commands (push, force push, reset --hard, clean, branch -D, checkout/restore .) and enforce versionedcommits & Branch Protection before an AI agent runs them. Installs hook scripts for Claude Code, Cursor, Cursor CLI, and Gemini CLI; documents Google Antigravity Terminal deny lists. Use when the user wants git safety hooks, to block git push or destructive git in agents, or to mirror the same policy across AI coding tools.",
+      "sha256": "1e2e3cf9d962e3d9",
       "path": "skills/guard-gitSKILL.md"
     },
     "harden-vps": {
@@ -178,7 +178,7 @@
     },
     "inspect-quality": {
       "description": "Interactive QA session where user reports bugs or issues conversationally, and the agent logs them to specs/bugs/registry.yaml with a structured audit schema. Explores the codebase in the background for context and domain language. Use when user wants to report bugs, do QA, or mentions \"QA session\".",
-      "sha256": "dc8924ba1d351f59",
+      "sha256": "1402f430cd739365",
       "path": "skills/inspect-qualitySKILL.md"
     },
     "investigate-bug": {
@@ -253,7 +253,7 @@
     },
     "release-branch": {
       "description": "Make the merge/PR/keep/discard decision for a feature branch, verify coverage gates, create the PR with gh, and clean up the worktree. Use when a feature is done and ready to ship, or when user says \"release\", \"merge\", or \"open a PR\".",
-      "sha256": "aaaf314d6b4f97f6",
+      "sha256": "24f6f63e55c708f4",
       "path": "skills/release-branchSKILL.md"
     },
     "request-review": {

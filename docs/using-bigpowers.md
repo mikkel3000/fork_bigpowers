@@ -39,14 +39,14 @@ ONCE/PROJECT orchestrate-project --mode standard
               │   4. develop-tdd      ← RED → GREEN → REFACTOR (vertical slices)                │
               │   5. verify-work      ← UAT gate (developer confirms)                           │
               │   6. audit-code       ← quality gate ≥ 94%                                      │
-              │   7. commit-message   ← Conventional Commits + semver bump                      │
+              │   7. commit-message   ← versionedcommits + semver bump                      │
               │   8. release-branch   ← land to main; stamps story_end + cycle-times.yaml ──────┘
               │
               ├─ Ph5 VERIFY     run-evals, verify-work (project-level)
               └─ Ph6 RELEASE    commit-message, release-branch, semantic-release → v1.0.0 MVP
 ```
 
-**Semver convention (v2.0.0):** starts at `0.0.0-β`; each `feat:` story → minor bump (`0.1.0`, `0.2.0`…); developer declares MVP by allowing `1.0.0` tag.
+**Semver convention (v2.0.0):** starts at `0.0.0-β`; explicit `@minor` release hints → minor bump (`0.1.0`, `0.2.0`…); developer declares MVP by allowing `1.0.0` tag.
 
 **Monitoring:** `npm run dashboard` (TUI) or `npm run dashboard:web` (browser, port 7742) — live panels showing pipeline, epic queue, BCP metrics, and cycle-time ledger.
 

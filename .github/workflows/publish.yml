@@ -1,55 +1,50 @@
-name: Release
+name: Versioned releases
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [closed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
-  cancel-in-progress: true
+  group: release-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: false
 
 jobs:
   skill-health:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
       - name: Run skill verify health check
         run: bash scripts/run-skill-verify.sh
 
-  release:
-    # Gate the release on skill health. Without this edge the two jobs run in
-    # parallel and semantic-release publishes even when skill-verify is red
-    # (observed on 2026-07-25: skill-health failure + release success -> 2.85.1).
-    needs: [skill-health]
+  compliance:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-
     steps:
       - uses: actions/checkout@v6
         with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
           fetch-depth: 0
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
-      
       - name: Install dependencies
         run: npm ci
-
       - name: Compliance gate
         run: npm run compliance
 
-      - name: Release
-        run: npm run release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  release:
+    needs: [skill-health, compliance]
+    permissions:
+      contents: write
+      pull-requests: write
+      statuses: write
+    # v0.1.0 predates this reusable workflow. Pin the reviewed implementation.
+    uses: mikkel3000/versionedcommits/.github/workflows/versionedcommits.yml@eb9ac58a58fb9ef7ed92802cbdcc244106e3e8b0

@@ -11,7 +11,7 @@ SIZE:      M
 A scaffolded cockpit alone proves nothing — the persuasive artifact is a
 COMPLETE build trail a prospect can read commit by commit: story spec, tasks
 with verify commands, TDD commits, verify-work UAT record, audit-code score,
-Conventional Commit landing. This story runs one feature epic of the showcase
+versionedcommits landing. This story runs one feature epic of the showcase
 app through the full 8-step build-epic cycle. Because e43 is slotted v2.8x,
 cycle-time metrics MUST be recorded via scripts/record-cycle-time.sh (the e40
 honest-metrics pipeline) — never hand-arithmetic — so the trail demonstrates
@@ -37,7 +37,7 @@ record-cycle-time.sh pattern (e40) available to replicate in the showcase repo.
 1. Pick the showcase repo's first feature epic from its release-plan.yaml.
 2. Run the full 8-step build-epic cycle on it: story spec + tasks.yaml with
    verify commands, develop-tdd red-green-refactor commits, verify-work UAT
-   record, audit-code score, Conventional Commit landing.
+   record, audit-code score, versionedcommits landing.
 3. Record cycle-time metrics via the record-cycle-time.sh pipeline (e40) —
    never hand-arithmetic.
 4. Confirm the complete trail is committed and visible in the repo history.
@@ -81,7 +81,7 @@ Not applicable — the public commit history is the only signal.
 
 ### 12. Audit and logging
 The complete trail IS the deliverable: story spec, tasks with verify commands,
-TDD commits, UAT record, audit score, Conventional Commit landing, and
+TDD commits, UAT record, audit score, versionedcommits landing, and
 pipeline-recorded cycle times — all committed, none reconstructed after the fact.
 
 ### 13. Solution variabilities
@@ -109,7 +109,7 @@ Scenario: Complete 8-step trail committed (happy path)
   When  one feature epic is built via the full 8-step cycle
   Then  the repo's history shows the complete trail: story spec, tasks
         with verify commands, TDD commits, verify-work UAT record,
-        audit-code score, Conventional Commit landing
+        audit-code score, versionedcommits landing
   And   cycle-time metrics are recorded via record-cycle-time.sh (e40
         pipeline — never hand-arithmetic)
 

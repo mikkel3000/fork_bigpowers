@@ -69,7 +69,7 @@ The file maintains a Markdown table with the following columns (derived from str
 | `lint` | `pass` / `fail` (filled in after fix) |
 | `commit_type` | `fix` / `fix!` / `feat` (filled in after fix) |
 | `release_type` | `patch` / `minor` / `major` (filled in after fix) |
-| `commit_message` | Conventional Commits message (filled in after fix) |
+| `commit_message` | versionedcommits message (filled in after fix) |
 | `follow_ups` | semicolon-separated follow-up items |
 | `file` | path to detailed `specs/bugs/BUG-*.md` (filled in by investigate-bug) |
 | `status` | `open` / `in-progress` / `fixed` / `wont-fix` |

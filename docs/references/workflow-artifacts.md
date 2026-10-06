@@ -27,7 +27,7 @@ All files live under `specs/` except where noted.
 | `specs/metrics/README.md` | `release-branch` (first story) | — | Metrics schema documentation |
 | `specs/EVALS-<feature>.md` | `run-evals` | `run-evals` | Capability measurement results |
 | `specs/bugs/BUG-*.md` | `investigate-bug` | `validate-fix` | Bug record and resolution |
-| `CHANGELOG.md` | `semantic-release` | `semantic-release` | Auto-generated from Conventional Commits |
+| `CHANGELOG.md` | `semantic-release` | `semantic-release` | Legacy publisher; see `docs/RELEASE.md` for migration |
 
 ---
 
@@ -39,7 +39,7 @@ All files live under `specs/` except where noted.
 | Avg cycle time per story | ≤ 90 min | Mean of `cycle_minutes` across stories | `specs/metrics/cycle-times.yaml` |
 | Code quality | ≥ 94% | `npm run compliance` output | `audit-code` |
 | Test suite | 0 failures | `npm test` | `verify-work` (cold-start) |
-| Semver progression | `feat:` → minor bump | `commit-message` analysis | `semantic-release` |
+| Semver progression | `@minor` → minor bump | `commit-message` analysis | `semantic-release` |
 | Stories landed per epic | All planned BCPs | `specs/execution-status.yaml` | `release-branch` |
 
 **Monitoring:** Run `npm run dashboard` (TUI) or `npm run dashboard:web` (browser on port 7742) to watch all metrics live as stories land.
@@ -65,10 +65,10 @@ The dashboard is **read-only**. It updates automatically via `chokidar` file wat
 | Stage | Version | How reached |
 |-------|---------|-------------|
 | Pre-delivery | `0.0.0-β` | Initial state after `orchestrate-project` |
-| Per story feat | `0.N.0` | Each `feat:` commit via `commit-message` |
-| Per story fix | `0.N.P` | Each `fix:` commit via `commit-message` |
-| MVP release | `1.0.0` | Developer declares MVP; `npm run release` tags it |
-| Post-MVP feat | `1.N.0` | Each `feat:` commit after MVP |
-| Breaking change | `N.0.0` | `feat!:` or `BREAKING CHANGE:` footer |
+| Per story feat | `0.N.0` | Explicit `@minor` hint via `commit-message` |
+| Per story fix | `0.N.P` | Explicit `@patch` hint via `commit-message` |
+| MVP release | `1.0.0` | Developer plans MVP; inspect versionedcommits output before releasing |
+| Post-MVP feat | `1.N.0` | Explicit `@minor` hint after MVP |
+| Breaking change | `N.0.0` | Explicit `@major` hint |
 
-The `1.0.0` tag is never automated — it is a deliberate human decision.
+Plan the MVP milestone deliberately; the generated version follows explicit hints and the latest stable tag.

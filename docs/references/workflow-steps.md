@@ -123,13 +123,13 @@
 - **Trigger:** `/commit-message`
 - **How:**
   1. Review working tree diff
-  2. Draft `<type>(<scope>): <desc>` (Conventional Commits)
-  3. Determine semver bump: `feat` → minor, `fix` → patch, `feat!` → major
+  2. Draft a free-form title/body plus user-facing versionedcommits release notes
+  3. Determine semver bump: `@minor` → minor, `@patch` → patch, `@major` → major; no hint → no release
   4. No `Co-authored-by` footer (per CONVENTIONS.md)
   5. `git commit -m "<message>"`
-- **Semver:** `0.0.0-β` → first `feat:` → `0.1.0` → ... → MVP `1.0.0`
+- **Semver:** `0.0.0-β` → first `@minor` → `0.1.0` → ... → MVP `1.0.0`
 - **Writes:** `state.yaml handoff.next_skill: release-branch`
-- **Gate:** READY (Conventional Commits format) → next: `release-branch`
+- **Gate:** READY (versionedcommits format) → next: `release-branch`
 
 ---
 
@@ -146,7 +146,7 @@
 - **Writes:**
   - `state.yaml metrics.story_end`, `metrics.cycle_minutes`, `metrics.bcp_per_hour`
   - `specs/metrics/cycle-times.yaml` — new row appended
-  - `state.yaml handoff.next_skill: survey-context` (next story) OR `semantic-release` (all done)
+  - `state.yaml handoff.next_skill: survey-context` (next story) OR release planning (all done)
 - **Gate:** READY (landed, worktree removed, metrics written)
 
 ---
@@ -154,8 +154,8 @@
 ## Phase 5–6: verify + release (once per project)
 
 - **Phase 5 VERIFY:** `run-evals` for capability measurement + `verify-work` for full regression UAT
-- **Phase 6 RELEASE:** `npm run release` (semantic-release) to tag the MVP version
-  - All `feat:` commits accumulate as minor bumps
+- **Phase 6 RELEASE:** the versionedcommits action (see `docs/RELEASE.md`)
+  - The highest explicit hint since the latest stable tag determines one release bump
   - Developer explicitly declares MVP by allowing the `1.0.0` tag
   - CHANGELOG.md generated; npm publish triggered if configured
 - **Output:** `v1.0.0` git tag, CHANGELOG.md, npm package published

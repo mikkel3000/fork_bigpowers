@@ -82,7 +82,7 @@ Links use vault-relative paths from `specs/wiki/entities/`.
 
 ## Integrate
 
-- [[../../../commit-message/SKILL.md|commit-message]] — Conventional Commits + semver
+- [[../../../commit-message/SKILL.md|commit-message]] — versionedcommits + semver
 - [[../../../release-branch/SKILL.md|release-branch]] — Merge/PR decision + cleanup
 
 ## Sustain

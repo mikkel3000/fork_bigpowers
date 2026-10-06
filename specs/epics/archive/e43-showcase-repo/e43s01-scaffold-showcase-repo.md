@@ -82,7 +82,7 @@ Not applicable — public visibility of the repo is the only signal.
 
 ### 12. Audit and logging
 The showcase repo's git history IS the audit trail — cockpit committed from
-day one, Conventional Commits throughout.
+day one, versionedcommits throughout.
 
 ### 13. Solution variabilities
 - App choice (decision) — any small utility with genuine logic qualifies;

@@ -5,7 +5,7 @@ Opt-in git integrate profile for solo developers. Keeps protected `main`, worktr
 ## When to use
 
 - Working alone; PR UI feels like overhead
-- You still want Conventional Commits, semantic-release, and no direct work on `main`
+- You still want versionedcommits, and no direct work on `main`
 - Remote CI on PR is optional, not required every task
 
 ## Integrate

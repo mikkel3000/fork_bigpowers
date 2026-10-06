@@ -22,7 +22,7 @@ Assess an incoming project plan for alignment with bigpowers principles, identif
 - Does `CLAUDE.md` or `AGENTS.md` exist?
 - Does `CONVENTIONS.md` exist?
 - Is the `specs/` directory layout in place?
-- Are commit conventions documented (Conventional Commits)?
+- Are commit conventions documented (versionedcommits)?
 - Is the git workflow mode identified (`solo-git` | `team-pr`)?
 
 ### 3. Bigpowers pre-flight (must all be answered before build)

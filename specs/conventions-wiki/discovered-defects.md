@@ -14,7 +14,7 @@ Any **reproducible gate failure** encountered during unrelated work is a discove
 2. **fix-bug** — when quick-fix guardrails abort, or the failure needs investigation (`specs/bugs/BUG-*.md` + TDD).
 3. **Log** — only when reproduction is blocked after good-faith attempt; write a BUG spec and stop forward work on the original task until triaged.
 
-Discovered fixes ship in the **same PR** as the original work but in **separate commits** (Conventional Commits). Never narrate a failure and continue.
+Discovered fixes ship in the **same PR** as the original work but in **separate commits** (versionedcommits). Never narrate a failure and continue.
 
 **Hard block:** Red Preflight or red CI blocks kickoff-branch, develop-tdd, and verify-work forward progress until fix-or-log produces green.
 

@@ -87,7 +87,7 @@
 | 59 | Verify | `validate-contracts` | "Assert data shape consistency across system boundaries — live API responses a | ✅ Active |
 | 60 | Verify | `validate-fix` | Prove a fix works before declaring done — re-run the failing test, run the ful | ✅ Active |
 | 61 | Verify | `verify-work` | Multi-phase UAT gate — cold-start smoke, build, typecheck, lint, tests, step-b | ✅ Active |
-| 62 | Release | `commit-message` | Reviews working-tree changes, then drafts a Conventional Commits title/body and  | ✅ Active |
+| 62 | Release | `commit-message` | Review working-tree changes and draft a free-form versionedcommits message wit | ✅ Active |
 | 63 | Release | `release-branch` | Make the merge/PR/keep/discard decision for a feature branch, verify coverage ga | ✅ Active |
 | 64 | Sustain | `compose-workflow` | Chain multiple bigpowers skills into a custom workflow recipe saved in specs/. U | ✅ Active |
 | 65 | Sustain | `delegate-task` | Delegate one complex task to a single subagent, review its work in two stages be | ✅ Active |

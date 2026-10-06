@@ -38,7 +38,7 @@ Skills are the core of bigpowers. To propose a new one:
 5. **Once approved,** open a PR with:
    - A new directory: `[verb]-[noun]/` containing `SKILL.md`
    - Evidence that you ran `bash scripts/sync-skills.sh` to regenerate artifacts
-   - A Conventional Commit: `feat(skills): add [verb]-[noun] skill`
+   - A versionedcommits message with a clear subject and an appropriate release hint
 
 ### Pull Request Process
 
@@ -46,7 +46,7 @@ Skills are the core of bigpowers. To propose a new one:
 2. **Follow CONVENTIONS.md.** F.I.R.S.T tests. SOLID. Boy Scout Rule. No `any` types. Functions under 20 lines.
 3. **Run sync.** After any SKILL.md change, run `bash scripts/sync-skills.sh` to regenerate generated artifacts. Do not edit `.cursor/rules` or `.gemini/extensions/` directly.
 4. **Validate YAML.** Run `bash scripts/validate-specs-yaml.sh` if you've changed any `specs/*.yaml` files.
-5. **Write Conventional Commits.** Format: `type(scope): description`. See [CONVENTIONS.md](CONVENTIONS.md#conventional-commits--semantic-versioning) for the full spec.
+5. **Write versionedcommits.** Use a free-form subject/body and explicit `@major`, `@minor`, or `@patch` release metadata. See [CONVENTIONS.md](CONVENTIONS.md#versionedcommits--semantic-versioning) for the full spec.
 6. **Open a PR.** Use `gh pr create`. Include: what you changed, why, how to verify, and any open questions.
 7. **Wait for review.** A maintainer will review within a few days. Be responsive to feedback.
 

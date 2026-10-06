@@ -1,5 +1,10 @@
-<type>(<scope>): <description>
+# Write a clear free-form subject (72 characters maximum).
 
-[body explaining the why]
+# Explain the implementation and why it changed.
 
-[footer like BREAKING CHANGE: ...]
+# For a release: put @major, @minor, or @patch at column one, followed by
+# a user-facing note title. Omit hints for internal-only changes.
+# Example (uncomment the three lines to include a detailed release note):
+# @patch Fixed missing skill links
+# Skill references now resolve correctly after installation.
+# @patch

@@ -66,7 +66,7 @@
       "observations": [
         "model: haiku",
         "effort: standard",
-        "description: Reviews working-tree changes, then drafts a Conventional Commits title/body and states the semantic-release version bump a single such commit would imply. Also notes which defensive-code categories were touched. Use when the user wants to commit recent work, prepare a Conventional Commits message, or asks for semantic-release / semver-consistent messaging before git commit."
+        "description: Review working-tree changes and draft a free-form versionedcommits message with explicit release hints and user-facing notes. Use when preparing a commit or explaining its SemVer impact."
       ]
     },
     {
@@ -264,7 +264,7 @@
       "observations": [
         "model: haiku",
         "effort: standard",
-        "description: Block dangerous git commands (push, force push, reset --hard, clean, branch -D, checkout/restore .) and enforce Conventional Commits & Branch Protection before an AI agent runs them. Installs hook scripts for Claude Code, Cursor, Cursor CLI, and Gemini CLI; documents Google Antigravity Terminal deny lists. Use when the user wants git safety hooks, to block git push or destructive git in agents, or to mirror the same policy across AI coding tools."
+        "description: Block dangerous git commands (push, force push, reset --hard, clean, branch -D, checkout/restore .) and enforce versionedcommits & Branch Protection before an AI agent runs them. Installs hook scripts for Claude Code, Cursor, Cursor CLI, and Gemini CLI; documents Google Antigravity Terminal deny lists. Use when the user wants git safety hooks, to block git push or destructive git in agents, or to mirror the same policy across AI coding tools."
       ]
     },
     {

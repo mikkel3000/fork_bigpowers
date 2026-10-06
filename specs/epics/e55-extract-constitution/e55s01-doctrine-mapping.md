@@ -69,7 +69,7 @@ hypothetical future rewrite, not this repo).
   small functions, seams for testability, G1–G30 clean-code heuristics —
   source: `sandi-metz.md`, `fowler.md`, `pragmatic-programmer.md`, `rich-hickey.md`,
   `uncle-bob.md`, `feathers.md`, `code-review.md`
-- Conventional Commits message mechanics (type/scope/subject/body/squash-merge) —
+- versionedcommits message mechanics (type/scope/subject/body/squash-merge) —
   source: `git-integration.md`, `workflow-steps.md`
 - Function-size/SRP/no-commented-code/no-debug-statements enforcement,
   RED-GREEN-REFACTOR per BCP task — source: `workflow-steps.md`

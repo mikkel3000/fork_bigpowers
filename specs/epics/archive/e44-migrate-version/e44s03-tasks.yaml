@@ -53,7 +53,7 @@ tasks:
     story: e44s03
 
   - id: s03-t11
-    description: "Implement safety layer 3: auto-commit with Conventional Commits message"
+    description: "Implement safety layer 3: auto-commit with versionedcommits message"
     verify: 'grep -q ''git add.*specs\|git commit\|migrate-version.*v.*→'' scripts/migrate-version.sh && echo OK'
     story: e44s03
 

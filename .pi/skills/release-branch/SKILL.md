@@ -41,12 +41,12 @@ If unsure, prefer **solo-local**. Also read `state.yaml` `vcs.kind`: Git follows
 
 ```bash
 <full test command> && <typecheck command> && <lint command>
-git log main...HEAD --oneline | grep -vE "^[a-f0-9]+ (feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?!?: .+$" && echo "❌ Non-conventional commits found" || echo "✅ Commits verified"
+git log main..HEAD --format=%B  # Review full messages and release hints
 # Block AI agent attribution (P1)
 git log main...HEAD --format="%B" | grep -qiE 'co[- ]authored[- ]by' && echo "❌ Co-authored-by footer found — blocked" || echo "✅ No AI attribution"
 ```
 
-- [ ] All tests pass, no type errors, no lint violations, all commits follow Conventional Commits
+- [ ] All tests pass, no type errors, no lint violations, all commits follow versionedcommits
 - [ ] **NO `Co-authored-by` or `Co-Authored-By`** in any commit body — P1 rule (CONVENTIONS.md § Git Attribution). `land-branch.sh` blocks the merge if found.
 
 ### 2. Coverage check
@@ -80,9 +80,9 @@ Run `commit-message` first. Git solo-local uses `land-branch.sh`. Jujutsu team m
 
 ```bash
 # Git solo-local
-bash scripts/land-branch.sh <task-slug> "feat(scope): description"
+bash scripts/land-branch.sh <task-slug> $'Describe the change\n\n@minor Added the capability'
 # Jujutsu team PR
-jj describe -m "feat(scope): description"
+jj describe -m $'Describe the change\n\n@minor Added the capability'
 jj bookmark set <task-slug> -r @
 jj git push -b <task-slug>
 ```
@@ -114,7 +114,7 @@ EOF
 gh pr merge --squash --delete-branch
 ```
 
-`semantic-release` auto-detects the commit, bumps SemVer, tags the repo, generates release notes.
+Preserve the release metadata explicitly in the final squash body using `gh pr merge --squash --subject "..." --body-file <release-message-file>`. The versionedcommits action reads those hints, prepares a release PR, and tags its merge after checks pass (see `docs/RELEASE.md`).
 
 ### 7a. Archive completed epic capsule
 
@@ -172,8 +172,8 @@ Report: "Branch released."
 ## PR body template (team-pr mode)
 
 ```bash
-PR_TITLE="<type>(<scope>): <description>"
-echo "$PR_TITLE" | grep -vE "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?!?: .+$" && echo "❌ ERROR: PR Title must follow Conventional Commits"
+PR_TITLE="Describe the user-visible change"
+# Review the final squash body for explicit release hints; the PR title is free-form.
 
 gh pr create \
   --title "$PR_TITLE" \
@@ -186,7 +186,7 @@ gh pr create \
 - [ ] All tests pass
 - [ ] Coverage gates met (≥80% overall, ≥95% business logic)
 - [ ] CONVENTIONS.md compliance verified
-- [ ] PR Title follows Conventional Commits (for automated release)
+- [ ] Final squash message preserves versionedcommits hints and user-facing release notes
 
 ## specs/ artifacts
 - [List any specs/ files produced or updated]
@@ -298,7 +298,7 @@ git checkout "$DEFAULT_BRANCH"
 git pull --rebase origin "$DEFAULT_BRANCH" 2>/dev/null || git pull origin "$DEFAULT_BRANCH"
 
 # Squash-merge the feature branch
-git merge --no-ff "$FEATURE_BRANCH" -m "<conventional-commit-message>"
+git merge --no-ff "$FEATURE_BRANCH" -m "<versionedcommits-message>"
 
 # Push
 git push origin "$DEFAULT_BRANCH"

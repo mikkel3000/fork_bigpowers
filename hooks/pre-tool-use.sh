@@ -3,7 +3,7 @@
 # Harness-agnostic Git Safety Hook for Claude Code, Cursor, and Gemini CLI.
 # Enforces:
 # 1. Block dangerous commands (force push, reset --hard, etc.)
-# 2. Enforce Conventional Commits for 'git commit'
+# 2. Allow versionedcommits free-form subjects; keep local length/attribution checks
 # 3. Block direct commits/pushes to protected branches (main, master)
 #    unless GIT_BIGPOWERS_LAND=1 (scripts/land-branch.sh only)
 
@@ -22,7 +22,6 @@ DANGEROUS_PATTERNS=(
   "push -f"
   "reset --hard"
 )
-CONVENTIONAL_COMMITS_REGEX='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?!?:[[:space:]].+'
 LAND_MODE="${GIT_BIGPOWERS_LAND:-}"
 
 # Detect mode from environment (for Gemini/Claude/Cursor parity)
@@ -89,7 +88,7 @@ if [[ "$COMMAND" =~ git[[:space:]]+commit ]] || [[ "$COMMAND" =~ git[[:space:]]+
     fi
   fi
 
-  # Conventional Commits for 'git commit'
+  # versionedcommits accepts free-form subjects and optional release hints
   if [[ "$COMMAND" =~ git[[:space:]]+commit ]]; then
     MSG=""
     if [[ "$COMMAND" =~ -m[[:space:]]+\"([^\"]+)\" ]]; then
@@ -100,10 +99,6 @@ if [[ "$COMMAND" =~ git[[:space:]]+commit ]] || [[ "$COMMAND" =~ git[[:space:]]+
 
     if [ -n "$MSG" ]; then
       SUBJECT=$(echo "$MSG" | head -n 1)
-      if [[ ! "$SUBJECT" =~ $CONVENTIONAL_COMMITS_REGEX ]]; then
-        deny "BLOCKED: Commit message must follow Conventional Commits: <type>(<scope>): <subject>. Valid types: feat, fix, docs, style, refactor, perf, test, build, ci, chore."
-      fi
-
       if [ ${#SUBJECT} -gt 72 ]; then
         deny "BLOCKED: Commit subject line must be 72 characters or less."
       fi

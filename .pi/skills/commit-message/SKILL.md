@@ -1,56 +1,58 @@
 ---
 name: commit-message
 model: haiku
-description: "Reviews working-tree changes, then drafts a Conventional Commits title/body and states the semantic-release version bump a single such commit would imply. Also notes which defensive-code categories were touched. Use when the user wants to commit recent work, prepare a Conventional Commits message, or asks for semantic-release / semver-consistent messaging before git commit."
+description: "Review working-tree changes and draft a free-form versionedcommits message with explicit release hints and user-facing notes. Use when preparing a commit or explaining its SemVer impact."
 ---
 
 # story: e82s02
 
 # Commit Message
-> **HARD GATE** — **HARD GATE** — Commits must follow Conventional Commits spec (type(scope): description). Do NOT use vague messages like 'fix' or 'updates.' The message must explain the 'why,' not the 'what.'
 
+> **HARD GATE** — Explain the change and its reason. Use versionedcommits metadata
+> for release impact: `@major`, `@minor`, or `@patch` on a separate unindented line.
+> Never infer a bump from the subject prefix. Internal-only work can omit a hint.
 
-## Modes
+## Workflow
 
-- Default: standard Conventional Commits message
-- --fix-type: Forces type=fix. Use when commit type is unambiguous.
+1. Read `specs/state.yaml` `vcs.kind`. For Git, inspect `git status`, `git diff`, and
+   `git diff --cached`; for Jujutsu, inspect `jj status`, `jj diff`, and `jj log -r @`.
+   Base the proposed commit on the changes that will actually be included.
+2. Use conversation context to explain intent and identify incompatible behavior.
+   Separate unrelated changes into atomic commits when appropriate.
+3. Choose impact: `@major` for breaking behavior, `@minor` for a compatible feature,
+   `@patch` for a compatible fix, or no hint for internal work with no release.
+4. Write a free-form subject (at most 72 characters) and optional implementation
+   body. Add a user-facing release note separately; follow [REFERENCE.md](../../../skills/commit-message/REFERENCE.md)
+   for matching block delimiters, bare-hint fallback, and squash handling.
+5. Report relevant defensive-code categories: rate limiting, retry/backoff,
+   circuit breaker, timeout, graceful degradation. Existing fix-ratio metrics
+   based on `fix:` prefixes are legacy and cannot classify free-form subjects;
+   do not distort the message or claim a recalculated ratio from those prefixes.
+6. Deliver the complete proposed message and its explicit impact (`major`, `minor`,
+   `patch`, or `none`). Distinguish this commit's impact from the aggregate next
+   release. Drafting a message does not authorize committing or publishing.
 
-## What "last chat" means
+## Example
 
-- **Primary source of truth:** Read `state.yaml` `vcs.kind`. Git uses `git status`, `git diff`, and `git diff --cached`; Jujutsu uses `jj status`, `jj diff`, and `jj log -r @`. Run in the repo root.
-- **Context:** use the current conversation to summarize *intent* and to spot **breaking** API/behavior changes that diff alone may not show.
-- If the user tracks a session baseline (e.g. branch, tag, or `git stash create` at start), you may `git diff <baseline>..HEAD` plus uncommitted diffs; otherwise use only the index and working tree.
+```text
+Handle missing catalog entries
 
-## Quick workflow
+Return an actionable error instead of crashing during skill lookup.
 
-1. **Inventory** — List changed paths; group by feature vs chore vs docs vs test-only.
-2. **Decide commit shape** — One atomic commit is ideal. If the diff mixes unrelated concerns, recommend **multiple commits** (each with its own type/scope) before suggesting one message.
-3. **Classify for semantic release** — `fix` → patch, `feat` → minor, **breaking** → major.
-4. **Write the message** — `type(optional-scope)!: description` (see [REFERENCE.md](../../../skills/commit-message/REFERENCE.md#message-format)). Use `!` or a `BREAKING CHANGE:` footer when behavior contracts change.
-5. **Note defensive-code categories touched** — from CONVENTIONS.md: Rate limit | Retry with backoff | Circuit breaker | Timeout | Graceful degradation
-6. **Note fix-ratio contribution** — Each `fix:` commit counts toward `metrics.commit_ratio.fix` in `specs/state.yaml`. After `release-branch`, `session-state` recalculates the ratio automatically. A high fix rate (>30%) triggers a deploy + smoke-test suggestion.
-7. **Deliver** — Output:
-   - Proposed **full commit message** (title + optional body + footers).
-   - **Release bump** this commit would drive: `patch` | `minor` | `major` | `none`.
-   - Optional native command: Git `git commit -m`; Jujutsu `jj commit -m`. Never omit `-m` or run destructive commands unless asked.
+@patch Fixed crashes when a skill is unavailable
+Users now see which skill is missing and can select another one.
+@patch
+```
 
-## Checklist before finalizing
+## Checklist
 
-- [ ] Type matches the **dominant** user-visible outcome (`feat` vs `fix` vs `perf`, etc.).
-- [ ] **Scope** is a short noun in parentheses if it helps (e.g. `fix(api): …`).
-- [ ] Breaking changes are explicit (`!` and/or `BREAKING CHANGE:` in the body/footer).
-- [ ] Description is imperative, lowercase start after the prefix, no trailing period in the title line.
-- [ ] **NO `Co-authored-by` or `Co-Authored-By` footers** — P1 rule (CONVENTIONS.md § Git Attribution). All commits must appear as if authored solely by the human user. The git hook and `land-branch.sh` both block these.
-
-## When not to invent a bump
-
-If the repo uses a custom `@semantic-release/commit-analyzer` preset, note that your bump is **heuristic** and they should match `.releaserc` / `release.config.*`. See [REFERENCE.md](../../../skills/commit-message/REFERENCE.md#custom-repositories).
-
-## Further reading
-
-- [REFERENCE.md](../../../skills/commit-message/REFERENCE.md) — Message shape, footers, release mapping, squashing notes.
-
-
+- [ ] Subject and body explain the actual change; no prescribed type/scope prefix.
+- [ ] Release hint matches compatibility impact; breaking changes include migration guidance.
+- [ ] Detailed release notes end with the same bare hint on its own line.
+- [ ] No hint is invented for internal-only work; no bump is inferred from title wording.
+- [ ] Final squash/merge message preserves the intended release metadata.
+- [ ] No `Co-authored-by` footers, per the repository attribution rule.
+- [ ] For other repositories, verify that their release automation consumes versionedcommits hints.
 
 ## Handoff
 
@@ -59,84 +61,80 @@ Writes: state.yaml handoff.next_skill = release-branch
 
 ---
 
-# Conventional Commits + semantic-style release (reference)
+# versionedcommits agent reference
+
+Source: [mikkel3000/versionedcommits](https://github.com/mikkel3000/versionedcommits).
 
 ## Message format
 
-From [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/#specification):
+Write a clear free-form subject and a body explaining the implementation and why it
+changed. No type prefix or parenthesized scope is required. This repository keeps
+its 72-character subject limit; that is a local rule, not part of versionedcommits.
+Release metadata belongs on separate lines starting at column one:
 
 ```text
-<type>[optional scope][optional !]: <description>
+Cache parsed skill metadata
 
-[optional body]
+Reuse parsed metadata to reduce repeated filesystem reads.
 
-[optional footer(s)]
+@patch Fixed slow skill discovery
+Large skill catalogs now load faster without changing the available skills.
+@patch
 ```
 
-- **Scope:** parenthesized noun, e.g. `feat(parser): …`.
-- **Breaking:** `!` before `:` (e.g. `feat(api)!: …`) and/or footer `BREAKING CHANGE: description` (token must be uppercase per spec for that footer name).
-- **Description:** short summary; body explains *why* or migration steps.
+The commit prose addresses maintainers. The hint title and description address
+release users. Start note titles with `Added`, `Changed`, `Deprecated`, `Removed`,
+`Fixed`, or `Security` to group Markdown changelog entries.
 
-Common **types** (not exhaustive): `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore` — as in [Angular / commitlint conventions](https://github.com/conventional-changelog/commitlint).
+## Choose the release impact explicitly
 
-## Advanced Specification Patterns
+| Hint | SemVer impact | Use for |
+|------|---------------|---------|
+| `@major` | Breaking change | Incompatible public API or behavior; explain migration |
+| `@minor` | Compatible feature | New user-visible capability |
+| `@patch` | Compatible fix | Bug fix or compatible improvement |
+| No hint | No release entry or bump | Internal work that should not trigger a release |
 
-### Reverts
-If the commit reverts a previous commit, it should begin with `revert:`, followed by the header of the reverted commit. In the body, it should say: `This reverts commit <hash>.`.
+Decide from the actual user impact. Prefixes such as `feat:` or `fix:`, an `!`, and
+`BREAKING CHANGE:` prose do not request a version bump. A breaking change needs
+`@major` even if its subject describes a fix. Do not add hints to every internal
+checkpoint just to pass a gate.
 
-```text
-revert: feat(api): add user endpoint
+Use one of these forms:
 
-This reverts commit 676104e.
-```
+- One-line note: `@patch Fixed missing skill links` on its own line.
+- Detailed note: opening hint with a title, description on following lines, and
+  the same bare hint on its own line to close the block. Always close detailed
+  blocks: the current parser only captures the description between matching hints.
+- Bare hint: `@minor` on its own line uses the commit title and body as the note.
+  Use this only when that prose is already suitable for release users.
 
-### Breaking Changes
-A breaking change can be signaled by:
-1.  A **`BREAKING CHANGE:`** footer (must be uppercase, at the start of the footer). This is the **most compatible** way to trigger a Major release in `semantic-release` (Angular preset).
-2.  A **`!`** after the type/scope: `feat(api)!: change user response shape`.
+Hints are lowercase and unindented; do not put them inline in a sentence or prefix
+with a bullet. Prefer one impact per atomic commit. If multiple notes are needed,
+close each block with its matching hint before starting the next; mismatched hints
+can discard notes. The highest impact since the latest stable SemVer tag determines
+the next version (`major` > `minor` > `patch`). No hints means no release.
 
-**Pro-tip:** For maximum compatibility with all tooling (older and newer), use BOTH the `!` and the `BREAKING CHANGE:` footer.
+## Squash, merge, and preview
 
-### Footers (Tokens & Values)
-Footers follow the same `Token: value` pattern as Git Trailers. Common tokens:
-- `Refs: #123`
-- `See-also: docs/ADR-001.md`
-- `Signed-off-by: Name <email>`
+Review full messages with `git log main..HEAD --format=%B`; `--oneline` hides hints.
+For a squash, explicitly preserve the intended metadata in the final squash commit
+body. A PR title alone carries no release hint. Use `gh pr merge --squash --subject
+"..." --body-file <release-message-file>` when merging, or pass the full multiline
+message to `land-branch.sh`. Review that final message before landing. Do not assume
+GitHub copies PR descriptions or all individual commit bodies into the squash.
 
-**Multi-line footers:** If a footer value spans multiple lines, each subsequent line must be indented.
+With the upstream binary installed, `versionedcommits --format json` and
+`versionedcommits --next-tag` preview the release from the current branch history
+without creating tags. They cannot inspect uncommitted changes. Compare the output
+with the intended impact; do not add `--tag`, `--commit`, or push to preview.
 
-### Squashing & History
-When using `gh pr merge --squash`, the PR title is usually used as the commit subject. 
-- **PR Title:** MUST follow `<type>(<scope>): <description>`
-- **PR Body:** Content will be moved to the commit body.
+## Release automation
 
-## Release Type Mapping (Default Angular Preset)
+This repository uses the upstream reusable versionedcommits workflow in
+`.github/workflows/publish.yml`, gated by skill health and compliance checks.
+It creates or updates a changelog PR on `versionedcommits/release`; merging that
+PR creates the release tag. Actions must be allowed to create and approve PRs.
 
-This table reflects the **out-of-the-box** behavior of `semantic-release` using the `@semantic-release/commit-analyzer` default (Angular) rules.
-
-| Commit pattern | Release | Notes |
-|----------------|---------|-------|
-| `fix:` | **Patch** | Bug fixes |
-| `feat:` | **Minor** | New features |
-| `perf:` | **Patch** | Performance improvements |
-| `any type` + `BREAKING CHANGE:` footer | **Major** | **Mandatory** for Major version bumps in default configs. |
-| `any type!:` (exclamation mark) | **Major** | Supported by modern CC parsers, but use footer for max safety. |
-| `docs:`, `chore:`, `test:`, `ci:`, `refactor:`, `style:` | **None** | Does not trigger a new release by default. |
-
-> **Warning:** While `refactor:` and `style:` improve code, they do NOT trigger a release in the default Angular preset. Use `fix:` if a refactor also fixes a bug, or `feat:` if it adds new behavior.
-
-## Custom Repositories
-
-- Read `release.config.js`, `.releaserc`, or `package.json` → `release` / `semantic-release` config.
-- The **@semantic-release/commit-analyzer** preset may map types differently; prefer **their** rules when they conflict with this reference.
-
-## Squash and PR titles
-
-- If the team squashes on merge, the **PR title** often becomes the single squashed commit subject — it should still follow `type(scope): description` for tooling.
-- `revert:` type and `Refs:` footers are valid patterns; revert handling varies by [tooling](https://www.conventionalcommits.org/en/v1.0.0/#specification).
-
-## Links
-
-- [Conventional Commits — specification](https://www.conventionalcommits.org/en/v1.0.0/#specification)
-- [semantic-release — README (commit format & flow)](https://github.com/semantic-release/semantic-release#commit-message-format)
-- Automation and docs align with [semantic-release](https://github.com/semantic-release/semantic-release) upstream; a fork may be substituted without changing this guidance.
+The action does not publish npm packages or update package version mirrors.
+See [release setup](../../../docs/RELEASE.md) for the installed workflow and limits.

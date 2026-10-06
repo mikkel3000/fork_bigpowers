@@ -39,7 +39,7 @@ XcluEzy7 built a native [oh-my-pi](https://github.com/oh-my-pi) OMP plugin that:
 - Discovers every skill in `skills/` at runtime for dynamic tool invocation.
 - Exposes a unified `bigpowers_skill` LLM tool with `list`/`get`/`run` operations.
 - Ports bigpowers' git-safety pre-tool-use hook into OMP's `tool_call` event API,
-  blocking dangerous patterns and enforcing Conventional Commits.
+  blocking dangerous patterns and enforcing versionedcommits.
 
 The upstream port (in `extensions/omp-hooks.ts`) rebases the discovery logic onto
 the current `skills/<name>/SKILL.md` source layout. The model-frontmatter stripping

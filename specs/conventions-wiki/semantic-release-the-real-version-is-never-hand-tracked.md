@@ -7,7 +7,7 @@ context: conventions
 # Semantic-release — the real version is never hand-tracked
 
 > **The authority is `gh release view` / git tags.** semantic-release decides the version
-> at merge from Conventional Commits. Never hand-maintain a `target_version` to "predict" it —
+> at merge from versionedcommits. Never hand-maintain a `target_version` to "predict" it —
 > that field drifts from reality every release. The specs only *mirror* the real tag for reference.
 
 1. **Planning intent (codename only)** — `specs/release-plan.yaml` → `release.version`, `release.bump_hint`.

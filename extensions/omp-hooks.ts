@@ -28,9 +28,6 @@ const DANGEROUS_PATTERNS = [
   /push\s+-f(?:\s|$)/,
 ];
 
-const CONVENTIONAL_RE =
-  /^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^)]+\))?!?:\s.+/;
-
 const PROTECTED_BRANCH_RE = /(?:^|\s|[:])(?:main|master)(?:\s|$)/;
 const PROTECTED_BRANCHES = ["main", "master"] as const;
 
@@ -386,13 +383,6 @@ export default function bigpowers(pi: ExtensionAPI) {
       }
       const msg = extractCommitMessage(command);
       if (msg) {
-        if (!CONVENTIONAL_RE.test(msg)) {
-          return {
-            block: true,
-            reason:
-              "BLOCKED: Commit message must follow Conventional Commits: <type>(<scope>): <subject>.",
-          };
-        }
         if (msg.split("\n")[0].length > 72) {
           return {
             block: true,

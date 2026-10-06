@@ -55,7 +55,7 @@ DORA classifies teams into four performance tiers based on their four-key metric
 | Deployment frequency | `release-branch` | Supports frequent small releases with PR/solo-land options |
 | Lead time | `kickoff-branch` | Feature branches enable parallel work and fast integration |
 | Change failure rate | `audit-code` | Gates prevent regressions from reaching production |
-| Restore time | `commit-message` | Conventional Commits enable fast rollback identification |
+| Restore time | `commit-message` | versionedcommits enable fast rollback identification |
 | Small batch sizes | `plan-work` | Capsules decompose work into small, independently releasable stories |
 | Trunk-based development | `release-branch` | Feature branches merge cleanly to main with squashed state commits |
 

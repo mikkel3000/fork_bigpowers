@@ -47,7 +47,7 @@ phases:
         expected: "?? specs/benchmarks/reports/GOLDEN-2026-07-18.yaml only"
         actual: "Confirmed — matched expected"
         passed: true
-      - step: "git add + commit GOLDEN-2026-07-18.yaml on its own with a chore: Conventional Commit"
+      - step: "git add + commit GOLDEN-2026-07-18.yaml on its own with a chore: versionedcommits"
         expected: "One commit, chore(...) prefix, single file"
         actual: "chore: track GOLDEN-2026-07-18 baseline — 1 file changed"
         passed: true

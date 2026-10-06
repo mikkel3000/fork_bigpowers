@@ -56,7 +56,7 @@ confirms the gap is real and tracked, not that it was newly discovered.
 | `CLAUDE.md` exists | ✅ | 18,765 bytes |
 | `CONVENTIONS.md` exists | ✅ | 25,332 bytes |
 | `specs/` directory layout in place | ✅ | Confirmed throughout this audit |
-| Commit conventions documented | ✅ | `CONVENTIONS.md:16-18` — Conventional Commits 1.0.0 + SemVer 2.0.0, mandatory |
+| Commit conventions documented | ✅ | `CONVENTIONS.md:16-18` — versionedcommits + SemVer 2.0.0, mandatory |
 | Git workflow mode identified | ✅ | **solo-git** — `profiles/solo-git.md` and `specs/WORKFLOW-solo-git.md` both present and active; `CONVENTIONS.md:34` documents the solo-profile integrate path (`land-branch.sh`, PR optional) |
 
 ---

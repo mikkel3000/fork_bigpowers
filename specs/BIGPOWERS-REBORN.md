@@ -27,7 +27,7 @@ Each load-bearing idea in today's bigpowers, cross-examined. Verdict, then the r
 | **Prescriptive hard gates everywhere** ("you MUST use a skill") | **REPLACE with risk-tiered gates** | Uniform gates cause gate fatigue and bypass training. Reborn bakes **TEA risk tiers** (P0–P3) in from day 0: trivial changes get a fast lane, risky changes get the full gauntlet. |
 | **Dual epic format** (`e01.yaml` *and* `e01-slug/` capsule) | **DROP** | One format: the capsule directory, always. |
 | **`next_skill` handoff chain** | **KEEP** | Genuine differentiator; cheap; survives interruption. Stays. |
-| **semantic-release + Conventional Commits** | **KEEP** (kernel) | Automated truth for versioning. Stays, in the kernel. |
+| **versionedcommits** | **KEEP** (kernel) | Automated truth for versioning. Stays, in the kernel. |
 | **Gherkin acceptance criteria in specs** | **KEEP** | Testable specs are the point of SDD. Kept — but kept *distinct* from the (now-deleted) self-compliance meta-tests. |
 
 The survivors define the soul: spec-as-source-of-truth, the layer-cake doctrine, verb-noun procedures, the fractal loop, file cockpit, **BCP sizing**, next_skill, semantic-release, testable specs. Everything else is negotiable — and much of it is cut.

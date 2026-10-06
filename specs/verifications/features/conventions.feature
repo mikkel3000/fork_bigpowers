@@ -5,7 +5,7 @@ Feature: Conventions Compliance
 
   Scenario: Conventions Alignment with Benchmarks
     Given the file CONVENTIONS.md
-    Then it must mandate Conventional Commits 1.0.0 and SemVer 2.0.0
+    Then it must mandate versionedcommits and SemVer 2.0.0
     And it must mandate function size limits (4-20 lines)
     And it must mandate file size limits (< 300 lines)
     And it must mandate the SRP (Single Responsibility Principle)

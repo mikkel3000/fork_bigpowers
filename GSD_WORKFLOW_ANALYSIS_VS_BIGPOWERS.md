@@ -241,7 +241,7 @@ Per-wave: Spawn executors in parallel
   │  ├── Project context (PROJECT.md, STATE.md)
   │  ├── Phase context (CONTEXT.md, RESEARCH.md)
   │  ├── Specific PLAN.md to execute
-  │  ├── Commit atomically per task (conventional commits)
+  │  ├── Commit atomically per task (versionedcommits)
   │  └── Create SUMMARY.md per plan
   ↓
 Post-wave: Run pre-commit hooks once (not per-agent)
@@ -261,7 +261,7 @@ All waves complete → Verifier
    - Fresh 200K context (or adaptive up to 1M)
    - Receives: PLAN.md, project context, phase context
    - Creates code + SUMMARY.md per plan
-   - Commits atomically per task (conventional commits: feat, fix, refactor, docs)
+   - Commits atomically per task (versionedcommits: feat, fix, refactor, docs)
    - Never blocks — next wave starts immediately after prior wave completes
 
 3. **Parallel Safety Mechanisms:**
@@ -288,7 +288,7 @@ All waves complete → Verifier
 **Artifacts Created:**
 - `{phase}-{N}-SUMMARY.md` — Per-plan execution outcome, what was shipped
 - `.planning/codebase/STRUCTURE.md` updated (drift detection)
-- Git commits (one per task, conventional format)
+- Git commits (one per task, versionedcommits format)
 
 ---
 
@@ -360,7 +360,7 @@ Git branching strategy:
 Create PR (gh pr create)
   ├── Links PLAN.md, SUMMARY.md, VERIFICATION.md
   ├── Auto-suggests reviewers (if enabled)
-  ├── Conventional title + body
+  ├── Free-form title + body with versionedcommits hints
   ↓
 Merge to main
   ↓
@@ -381,7 +381,7 @@ If phase is last in milestone:
    - Blocks merge if gates fail
 
 2. **PR Quality:**
-   - Conventional Commits title (feat, fix, refactor, docs)
+   - versionedcommits title (feat, fix, refactor, docs)
    - Linked artifacts (test results, deployment evidence)
    - Auto-linked to REQUIREMENTS.md (REQ-IDs mentioned)
 
@@ -535,7 +535,7 @@ For reference, Bigpowers skills mapped by BMAD phase:
 | **Review** | audit-code | (embedded in plan-checker + execution) |
 | | request-review | `/gsd-code-review` workflow |
 | | respond-review | (embedded in plan-phase --reviews) |
-| **Integrate** | commit-message | Conventional Commits (automated in executors) |
+| **Integrate** | commit-message | versionedcommits (automated in executors) |
 | | release-branch | `/gsd-ship` workflow |
 | **Sustain** | inspect-quality | `/gsd-verify-work` → `gsd-verifier` |
 | | organize-workspace | `/gsd-workspace` for multi-repo isolation |
@@ -978,7 +978,7 @@ LOOP [for each phase]:
   │   ├── Per-wave: spawn executors in parallel
   │   │   ├── Fresh 200K context per executor
   │   │   ├── Execute task
-  │   │   ├── Commit atomically (conventional)
+  │   │   ├── Commit atomically (versionedcommits)
   │   │   └── Create SUMMARY.md
   │   ├── Post-wave: run pre-commit hooks once
   │   ├── Schema Drift Gate

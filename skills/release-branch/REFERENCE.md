@@ -23,8 +23,8 @@
 ## PR body template (team-pr mode)
 
 ```bash
-PR_TITLE="<type>(<scope>): <description>"
-echo "$PR_TITLE" | grep -vE "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?!?: .+$" && echo "❌ ERROR: PR Title must follow Conventional Commits"
+PR_TITLE="Describe the user-visible change"
+# Review the final squash body for explicit release hints; the PR title is free-form.
 
 gh pr create \
   --title "$PR_TITLE" \
@@ -37,7 +37,7 @@ gh pr create \
 - [ ] All tests pass
 - [ ] Coverage gates met (≥80% overall, ≥95% business logic)
 - [ ] CONVENTIONS.md compliance verified
-- [ ] PR Title follows Conventional Commits (for automated release)
+- [ ] Final squash message preserves versionedcommits hints and user-facing release notes
 
 ## specs/ artifacts
 - [List any specs/ files produced or updated]
@@ -149,7 +149,7 @@ git checkout "$DEFAULT_BRANCH"
 git pull --rebase origin "$DEFAULT_BRANCH" 2>/dev/null || git pull origin "$DEFAULT_BRANCH"
 
 # Squash-merge the feature branch
-git merge --no-ff "$FEATURE_BRANCH" -m "<conventional-commit-message>"
+git merge --no-ff "$FEATURE_BRANCH" -m "<versionedcommits-message>"
 
 # Push
 git push origin "$DEFAULT_BRANCH"

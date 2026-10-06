@@ -92,7 +92,7 @@ Merges use a **mode flag** instead of a sibling skill (the review's recommendati
 | `build-epic` | build-epic + execute-plan | 8-step story cycle / batch |
 | `develop-tdd` | develop-tdd + enforce-first | RED-GREEN-REFACTOR with F.I.R.S.T inline |
 | `verify-work` | verify-work + validate-fix + simulate-agents | `--scope full\|fix`; completeness/gap critic built in |
-| `commit-message` | commit-message | Conventional Commits + semver |
+| `commit-message` | commit-message | versionedcommits + semver |
 | `release-branch` | release-branch | land / PR / semantic-release |
 
 ### Specialists — 18 (invoked when the situation calls)

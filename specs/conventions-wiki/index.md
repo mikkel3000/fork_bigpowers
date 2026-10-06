@@ -10,7 +10,7 @@ context: conventions
 
 ## Convention Sections
 
-- [Conventional Commits & Semantic Versioning](conventional-commits-semantic-versioning.md)
+- [versionedcommits & Semantic Versioning](versionedcommits-semantic-versioning.md)
 - [Commit Message Format](commit-message-format.md)
 - [Types & Version Bumps](types-version-bumps.md)
 - [GitHub & Git Operations](github-git-operations.md)

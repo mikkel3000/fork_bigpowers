@@ -19,7 +19,7 @@ The natural RED state is "verify command fails" and GREEN is "verify command pas
 Cycle: RED (verify fails) → GREEN (config change passes verify) → COMMIT
 
 Skips test-writing phase entirely. Still gated: verify must have runnable command,
-commit message follows Conventional Commits.
+commit message follows versionedcommits.
 
 ## 2. build-epic --fast mode
 
